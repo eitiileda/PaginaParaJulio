@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subir producto</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { max-width: 420px; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input, textarea, select { width: 100%; padding: 6px; box-sizing: border-box; }
+        .error { color: #b00020; font-weight: bold; }
+        button { margin-top: 16px; padding: 8px 16px; }
+    </style>
+</head>
+<body>
+    <p><a href="{{ url_for('index') }}">&larr; Volver</a></p>
+    <h1>Subir producto a la venta</h1>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form action="{{ url_for('upload') }}" method="POST">
+        <label>Nombre del producto</label>
+        <input type="text" name="nombre" required>
+
+        <label>Descripción del producto</label>
+        <textarea name="descripcion" rows="3"></textarea>
+
+        <label>Logo (URL de imagen, opcional)</label>
+        <input type="text" name="logo">
+
+        <label>Vendedor</label>
+        <select name="id_usuario" required>
+            <option value="" disabled selected>Selecciona un vendedor</option>
+            {% for vendedor in vendedores %}
+            <option value="{{ vendedor.id_usuario }}">{{ vendedor.nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Precio</label>
+        <input type="number" name="precio" min="0.01" max="99999999.99" step="0.01" required>
+
+        <label>Stock</label>
+        <input type="number" name="stock" min="0" step="1" required>
+
+        <label>Descripción del vendedor (estado, entrega, etc.)</label>
+        <textarea name="descripcion_vendedor" rows="2"></textarea>
+
+        <button type="submit">Publicar</button>
+    </form>
+</body>
+</html>

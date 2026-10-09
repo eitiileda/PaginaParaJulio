@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda Online de Videojuegos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .card { border: 1px solid #ccc; border-radius: 6px; padding: 12px; margin-bottom: 12px; max-width: 400px; }
+        .precio { font-size: 1.2em; font-weight: bold; color: #2a7a2a; }
+    </style>
+</head>
+<body>
+    <a href="upload.html">Sube tus productos aquí</a>
+    <h1>Publicaciones activas</h1>
+
+    {% for pub in publicaciones %}
+    <div class="card">
+        <h3>{{ pub.producto.nombre }}</h3>
+        <p>{{ pub.descripcion_vendedor }}</p>
+        <p class="precio">${{ pub.precio }}</p>
+        <p>Stock: {{ pub.stock }}</p>
+        <p>Vendedor: {{ pub.vendedor.nombre }} (valoración {{ pub.valoracion }})</p>
+        <a href="{{ url_for('detalle_publicacion', id_publicacion=pub.id_publicacion) }}">Ver detalle</a>
+    </div>
+    {% else %}
+    <p>No hay publicaciones activas todavía.</p>
+    {% endfor %}
+</body>
+</html>

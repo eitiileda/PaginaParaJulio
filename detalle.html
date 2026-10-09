@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ publicacion.producto.nombre }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .precio { font-size: 1.4em; font-weight: bold; color: #2a7a2a; }
+    </style>
+</head>
+<body>
+    <p><a href="{{ url_for('index') }}">&larr; Volver</a></p>
+
+    <h1>{{ publicacion.producto.nombre }}</h1>
+    <p>{{ publicacion.producto.descripcion }}</p>
+    <hr>
+
+    <p><strong>Descripción del vendedor:</strong> {{ publicacion.descripcion_vendedor }}</p>
+    <p class="precio">${{ publicacion.precio }}</p>
+    <p><strong>Stock disponible:</strong> {{ publicacion.stock }}</p>
+    <p><strong>Estado:</strong> {{ publicacion.estado }}</p>
+    <p><strong>Vendedor:</strong> {{ publicacion.vendedor.nombre }} ({{ publicacion.vendedor.email }})</p>
+    <p><strong>Valoración del vendedor:</strong> {{ publicacion.valoracion }}</p>
+</body>
+</html>
