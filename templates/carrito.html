@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Gamer - Carrito</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
+</head>
+<body>
+
+    <header>
+        <a href="{{ url_for('index') }}" class="header-back"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1 class="header-title">Carrito</h1>
+    </header>
+
+    <main class="cart-main">
+        <div class="cart-section">
+            <div class="section-title-custom">Comprados</div>
+            <a href="{{ url_for('producto') }}" class="product-sketch-card">
+                <div class="sketch-img-box"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=150" alt="Control PS5"></div>
+                <div class="sketch-info">
+                    <span class="sketch-estado">Entregado</span>
+                    <span class="sketch-nombre">Control Inalámbrico DualSense Edición Gamer</span>
+                    <span class="sketch-precio">$ 45.990</span>
+                </div>
+            </a>
+            <a href="{{ url_for('producto') }}" class="product-sketch-card">
+                <div class="sketch-img-box"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=150" alt="Juego PS5"></div>
+                <div class="sketch-info">
+                    <span class="sketch-estado">En camino</span>
+                    <span class="sketch-nombre">Videojuego RPG Ficción Coleccionista PS5</span>
+                    <span class="sketch-precio">$ 16.550</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="cart-section">
+            <div class="section-title-custom">Encargos</div>
+            <a href="{{ url_for('producto') }}" class="product-sketch-card">
+                <div class="sketch-img-box"><img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=150" alt="PC Gamer"></div>
+                <div class="sketch-info">
+                    <span class="sketch-estado encargo">Pendiente de importación</span>
+                    <span class="sketch-nombre">PC Gamer Armada Intel Core i7 16GB SSD 1TB</span>
+                    <span class="sketch-precio">$ 1.267.105</span>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="{{ url_for('index') }}" class="bottom-nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+        <a href="{{ url_for('categorias') }}" class="bottom-nav-item"><i class="fa-solid fa-tags"></i><span>Categorías</span></a>
+        <a href="{{ url_for('carrito') }}" class="bottom-nav-item active"><i class="fa-solid fa-cart-shopping"></i><span>Carrito</span></a>
+        <a href="{{ url_for('publicacion') }}" class="bottom-nav-item"><i class="fa-solid fa-circle-plus"></i><span>Vender</span></a>
+        <a href="{{ url_for('chats') }}" class="bottom-nav-item"><i class="fa-solid fa-comments"></i><span>Chats</span></a>
+    </nav>
+
+</body>
+</html>

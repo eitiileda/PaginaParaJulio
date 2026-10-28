@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameMarket | Tu tienda gamer</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header>
+        <div class="header-top">
+
+            <a href="index.html" class="logo">
+                Game<span>Market</span>
+            </a>
+
+            <form class="search" action="busqueda.html" method="get">
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Buscar videojuegos, consolas y accesorios..."
+                    aria-label="Buscar productos"
+                >
+                <button type="submit">Buscar</button>
+            </form>
+
+            <div class="header-links">
+                <a href="historial.html">Historial</a>
+                <a href="carrito.html">🛒 Carrito</a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MENÚ PRINCIPAL -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="categorias.html">Categorías</a></li>
+            <li><a href="mas_opciones.html">Más opciones</a></li>
+            <li><a href="publicacion.html">Vender un producto</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <!-- BANNER PRINCIPAL -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Tu próximo nivel comienza acá</h1>
+
+                <p>
+                    Descubrí videojuegos, consolas, componentes de PC
+                    y accesorios gamer. Comprá, vendé y equipate
+                    para jugar como más te gusta.
+                </p>
+
+                <a href="categorias.html" class="hero-button">
+                    Explorar productos
+                </a>
+            </div>
+
+            <div class="hero-icon" aria-hidden="true">
+                🎮
+            </div>
+        </section>
+
+        <!-- CATEGORÍAS -->
+        <section class="section">
+            <h2>Explorá las categorías</h2>
+
+            <div class="categories">
+
+                <a href="tal_categoria.html?categoria=consolas"
+                   class="category">
+                    <div class="category-icon">🕹️</div>
+                    <h3>Consolas</h3>
+                </a>
+
+                <a href="tal_categoria.html?categoria=videojuegos"
+                   class="category">
+                    <div class="category-icon">🎮</div>
+                    <h3>Videojuegos</h3>
+                </a>
+
+                <a href="tal_categoria.html?categoria=componentes"
+                   class="category">
+                    <div class="category-icon">🖥️</div>
+                    <h3>Componentes de PC</h3>
+                </a>
+
+                <a href="tal_categoria.html?categoria=accesorios"
+                   class="category">
+                    <div class="category-icon">🎧</div>
+                    <h3>Accesorios gamer</h3>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- PRODUCTOS DESTACADOS -->
+        <section class="section">
+            <h2>Productos destacados</h2>
+
+            <div class="products">
+
+                <article class="product">
+                    <div class="product-image">🎮</div>
+
+                    <div class="product-info">
+                        <h3>Joystick inalámbrico</h3>
+                        <p class="price">$89.999</p>
+                        <p class="installments">3 cuotas sin interés</p>
+                        <p class="shipping">Envío gratis</p>
+
+                        <a href="producto.html?id=1"
+                           class="product-button">
+                            Ver producto
+                        </a>
+                    </div>
+                </article>
+
+                <article class="product">
+                    <div class="product-image">🎧</div>
+
+                    <div class="product-info">
+                        <h3>Auriculares gamer con micrófono</h3>
+                        <p class="price">$54.999</p>
+                        <p class="installments">3 cuotas sin interés</p>
+                        <p class="shipping">Envío gratis</p>
+
+                        <a href="producto.html?id=2"
+                           class="product-button">
+                            Ver producto
+                        </a>
+                    </div>
+                </article>
+
+                <article class="product">
+                    <div class="product-image">⌨️</div>
+
+                    <div class="product-info">
+                        <h3>Teclado mecánico RGB</h3>
+                        <p class="price">$72.500</p>
+                        <p class="installments">3 cuotas sin interés</p>
+                        <p class="shipping">Consultar envío</p>
+
+                        <a href="producto.html?id=3"
+                           class="product-button">
+                            Ver producto
+                        </a>
+                    </div>
+                </article>
+
+                <article class="product">
+                    <div class="product-image">🖱️</div>
+
+                    <div class="product-info">
+                        <h3>Mouse gamer RGB</h3>
+                        <p class="price">$32.999</p>
+                        <p class="installments">3 cuotas sin interés</p>
+                        <p class="shipping">Envío gratis</p>
+
+                        <a href="producto.html?id=4"
+                           class="product-button">
+                            Ver producto
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN PARA VENDEDORES -->
+        <section class="section">
+            <h2>¿Tenés algo gamer para vender?</h2>
+
+            <p class="moved-inline-style-1">
+                Publicá tus productos y encontrá compradores
+                dentro de la comunidad gamer.
+            </p>
+
+            <a href="publicacion.html" class="hero-button moved-inline-style-2"
+              >
+                Publicar un producto
+            </a>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p><strong>GameMarket</strong> — Tu espacio gamer.</p>
+        <p>Proyecto académico de e-commerce.</p>
+        <p>© 2026 GameMarket. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

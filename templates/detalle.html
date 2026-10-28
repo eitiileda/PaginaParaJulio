@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ publicacion.producto.nombre if publicacion else "Detalle de publicación" }}</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle.css') }}">
+</head>
+<body>
+    <p><a href="{{ url_for('index') }}">&larr; Volver</a></p>
+
+    {% if publicacion %}
+    <h1>{{ publicacion.producto.nombre }}</h1>
+    <p>{{ publicacion.producto.descripcion }}</p>
+    <hr>
+    <p><strong>Descripción del vendedor:</strong> {{ publicacion.descripcion_vendedor }}</p>
+    <p class="precio">${{ publicacion.precio }}</p>
+    <p><strong>Stock disponible:</strong> {{ publicacion.stock }}</p>
+    <p><strong>Estado:</strong> {{ publicacion.estado }}</p>
+    <p><strong>Vendedor:</strong> {{ publicacion.vendedor.nombre }} ({{ publicacion.vendedor.email }})</p>
+    <p><strong>Valoración del vendedor:</strong> {{ publicacion.valoracion }}</p>
+    {% else %}
+    <h1>Publicación no disponible</h1>
+    <p>Volvé al inicio para explorar productos.</p>
+    {% endif %}
+</body>
+</html>

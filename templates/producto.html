@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Producto | GameMarket</title>
+
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/producto.css') }}">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header>
+        <div class="header-top">
+
+            <a href="index.html" class="logo">
+                Game<span>Market</span>
+            </a>
+
+            <form class="search" action="busqueda.html" method="get">
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Buscar videojuegos, consolas y accesorios..."
+                    aria-label="Buscar productos"
+                    required
+                >
+
+                <button type="submit">Buscar</button>
+            </form>
+
+            <div class="header-links">
+                <a href="historial.html">Historial</a>
+                <a href="carrito.html">🛒 Carrito</a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MENÚ -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="categorias.html">Categorías</a></li>
+            <li><a href="mas_opciones.html">Más opciones</a></li>
+            <li><a href="publicacion.html">Vender un producto</a></li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <div class="breadcrumb">
+            <a href="index.html">Inicio</a> /
+            <a href="categorias.html">Categorías</a> /
+            <span id="breadcrumb-name">Producto</span>
+        </div>
+
+        <div class="product-layout">
+
+            <!-- GALERÍA E INFORMACIÓN -->
+            <section class="product-gallery">
+
+                <div class="product-image" id="product-image"
+                     role="img" aria-label="Imagen del producto">
+                    🎮
+                </div>
+
+                <div class="thumbnail-list">
+                    <div class="thumbnail selected">🎮</div>
+                    <div class="thumbnail">📦</div>
+                    <div class="thumbnail">🕹️</div>
+                </div>
+
+                <div class="product-summary">
+
+                    <span class="condition" id="product-condition">
+                        Nuevo
+                    </span>
+
+                    <h1 id="product-name">
+                        Consola PlayStation 5
+                    </h1>
+
+                    <p class="product-meta" id="product-meta">
+                        Código de producto: GM-001
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- PANEL DE COMPRA -->
+            <aside class="purchase-column">
+
+                <section class="purchase-card">
+
+                    <p class="old-price moved-inline-style-1" id="old-price"
+                      >
+                        $0
+                    </p>
+
+                    <p class="price" id="product-price">
+                        $899.999
+                    </p>
+
+                    <p class="payment-info">
+                        Consultá los medios de pago disponibles
+                        y las opciones de financiación.
+                    </p>
+
+                    <p class="stock" id="product-stock">
+                        Disponible
+                    </p>
+
+                    <label class="quantity-label" for="quantity">
+                        Cantidad
+                    </label>
+
+                    <input
+                        class="quantity"
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        max="10"
+                        value="1"
+                    >
+
+                    <div class="notice" id="notice"
+                         role="status" aria-live="polite">
+                    </div>
+
+                    <button class="buy-button" id="buy-button">
+                        Comprar ahora
+                    </button>
+
+                    <button class="cart-button" id="cart-button">
+                        Agregar al carrito
+                    </button>
+
+                    <div class="benefit">
+                        <span class="benefit-icon">🚚</span>
+                        <div>
+                            <strong>Información de envío</strong>
+                            Consultá las opciones de entrega disponibles.
+                        </div>
+                    </div>
+
+                    <div class="benefit">
+                        <span class="benefit-icon">🔒</span>
+                        <div>
+                            <strong>Compra segura</strong>
+                            Revisá los datos del vendedor antes de comprar.
+                        </div>
+                    </div>
+
+                    <div class="benefit">
+                        <span class="benefit-icon">↩️</span>
+                        <div>
+                            <strong>Política de devolución</strong>
+                            Las condiciones dependen de la publicación.
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- DATOS DEL VENDEDOR -->
+                <section class="seller-card">
+
+                    <h2>Información del vendedor</h2>
+
+                    <div class="seller-profile">
+                        <div class="seller-avatar">👤</div>
+
+                        <div>
+                            <p class="seller-name">GameStore</p>
+                            <p class="seller-rating">
+                                Vendedor de ejemplo
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="seller-description">
+                        Especializado en videojuegos, consolas
+                        y accesorios gamer.
+                    </p>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <section class="details-card">
+
+            <h2>Descripción del producto</h2>
+
+            <p id="product-description">
+                Descubrí este producto gamer. Consultá sus características
+                y verificá los detalles de la publicación antes de comprar.
+            </p>
+
+            <h2>Características principales</h2>
+
+            <table class="specifications">
+                <tbody id="product-specifications">
+                    <tr>
+                        <td>Categoría</td>
+                        <td>Consolas</td>
+                    </tr>
+                    <tr>
+                        <td>Estado</td>
+                        <td>Nuevo</td>
+                    </tr>
+                    <tr>
+                        <td>Disponibilidad</td>
+                        <td>Disponible</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p><strong>GameMarket</strong> — Tu espacio gamer.</p>
+        <p>Proyecto académico de e-commerce.</p>
+        <p>© 2026 GameMarket. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- LÓGICA DE LA PÁGINA -->
+    <script src="{{ url_for('static', filename='js/producto.js') }}" defer></script>
+
+</body>
+</html>

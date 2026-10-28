@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ofertas - Mercado Gamer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ofertas.css') }}">
+</head>
+<body>
+
+    <header>
+        <a href="{{ url_for('index') }}" class="header-back"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1 class="page-title">Ofertas</h1>
+    </header>
+
+    <div class="filters-section">
+        <select class="filter-dropdown">
+            <option value="">Filtros</option>
+            <option value="mayor-precio">Mayor precio</option>
+            <option value="menor-precio">Menor precio</option>
+        </select>
+        <select class="filter-dropdown">
+            <option value="">Categoría</option>
+            <option value="juegos">Juegos Digitales</option>
+            <option value="hardware">Hardware / Consolas</option>
+            <option value="perifericos">Periféricos</option>
+        </select>
+    </div>
+
+    <div class="content">
+        <div class="offers-list">
+            <a href="{{ url_for('producto') }}" class="offer-item">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=150" alt="Control DualSense" class="offer-img">
+                <div class="offer-details"><span class="offer-price">$ 24.990</span><span class="offer-name">Control DualSense Edición Limitada God of War</span><span class="offer-discount">35% OFF</span></div>
+            </a>
+            <a href="{{ url_for('producto') }}" class="offer-item">
+                <img src="https://images.unsplash.com/photo-1612287233302-be16c3116dfd?w=150" alt="Auriculares RGB" class="offer-img">
+                <div class="offer-details"><span class="offer-price">$ 14.500</span><span class="offer-name">Auriculares Gamer RGB 7.1 Surround</span><span class="offer-discount">50% OFF</span></div>
+            </a>
+            <a href="{{ url_for('producto') }}" class="offer-item">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=150" alt="Gaming Pass" class="offer-img">
+                <div class="offer-details"><span class="offer-price">$ 8.990</span><span class="offer-name">Suscripción 3 Meses Gaming Pass Deluxe</span><span class="offer-discount">20% OFF</span></div>
+            </a>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="{{ url_for('index') }}" class="bottom-nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+        <a href="{{ url_for('categorias') }}" class="bottom-nav-item"><i class="fa-solid fa-tags"></i><span>Categorías</span></a>
+        <a href="{{ url_for('carrito') }}" class="bottom-nav-item"><i class="fa-solid fa-cart-shopping"></i><span>Carrito</span></a>
+        <a href="{{ url_for('publicacion') }}" class="bottom-nav-item"><i class="fa-solid fa-circle-plus"></i><span>Vender</span></a>
+        <a href="{{ url_for('chats') }}" class="bottom-nav-item"><i class="fa-solid fa-comments"></i><span>Chats</span></a>
+    </nav>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Más opciones | GameMarket</title>
+
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mas_opciones.css') }}">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+        <div class="encabezado-superior">
+
+            <a href="index.html" class="logo">
+                Game<span>Market</span>
+            </a>
+
+            <form class="buscador" action="busqueda.html" method="get">
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Buscar videojuegos, consolas y accesorios..."
+                    aria-label="Buscar productos"
+                >
+                <button type="submit">Buscar</button>
+            </form>
+
+            <a href="carrito.html">🛒 Mi carrito</a>
+
+        </div>
+
+        <nav class="navegacion">
+            <a href="index.html">Inicio</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="mas_opciones.html">Más opciones</a>
+            <a href="historial.html">Mi historial</a>
+            <a href="publicacion.html">Vender un producto</a>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <div class="migas">
+            <a href="index.html">Inicio</a> / Más opciones
+        </div>
+
+        <h1 class="titulo-principal">Más opciones ⚙️</h1>
+
+        <p class="introduccion">
+            Encontrá accesos útiles para administrar tus compras, publicar
+            productos y conocer más sobre GameMarket.
+        </p>
+
+        <!-- BANNER -->
+        <section class="banner">
+            <div>
+                <h2>¿Necesitás una mano?</h2>
+                <p>
+                    Explorá las preguntas frecuentes y conocé cómo funciona
+                    nuestra plataforma de productos gamer.
+                </p>
+            </div>
+
+            <div class="banner-icono" aria-hidden="true">🎧</div>
+        </section>
+
+        <!-- OPCIONES PRINCIPALES -->
+        <section>
+            <h2 class="titulo-seccion">Explorá las opciones</h2>
+
+            <div class="opciones-grid">
+
+                <a href="categorias.html" class="opcion">
+                    <div class="opcion-icono">🎮</div>
+                    <h3>Explorar categorías</h3>
+                    <p>
+                        Encontrá consolas, videojuegos, periféricos,
+                        computadoras y accesorios.
+                    </p>
+                    <span class="opcion-enlace">Ver categorías →</span>
+                </a>
+
+                <a href="carrito.html" class="opcion">
+                    <div class="opcion-icono">🛒</div>
+                    <h3>Mis compras</h3>
+                    <p>
+                        Revisá los productos que agregaste al carrito
+                        y consultá el total de tu compra.
+                    </p>
+                    <span class="opcion-enlace">Ir al carrito →</span>
+                </a>
+
+                <a href="historial.html" class="opcion">
+                    <div class="opcion-icono">🕒</div>
+                    <h3>Historial de visitas</h3>
+                    <p>
+                        Volvé a consultar los productos que estuviste
+                        mirando recientemente.
+                    </p>
+                    <span class="opcion-enlace">Ver historial →</span>
+                </a>
+
+                <a href="publicacion.html" class="opcion">
+                    <div class="opcion-icono">📦</div>
+                    <h3>Vender productos</h3>
+                    <p>
+                        Accedé al formulario para preparar una publicación
+                        de tus artículos gamer.
+                    </p>
+                    <span class="opcion-enlace">Publicar producto →</span>
+                </a>
+
+                <a href="busqueda.html" class="opcion">
+                    <div class="opcion-icono">🔎</div>
+                    <h3>Buscar productos</h3>
+                    <p>
+                        Buscá por nombre o explorá los artículos disponibles
+                        en nuestro catálogo de demostración.
+                    </p>
+                    <span class="opcion-enlace">Buscar ahora →</span>
+                </a>
+
+                <a href="#preguntas-frecuentes" class="opcion">
+                    <div class="opcion-icono">❓</div>
+                    <h3>Ayuda y preguntas frecuentes</h3>
+                    <p>
+                        Consultá información general sobre las funciones
+                        de la plataforma.
+                    </p>
+                    <span class="opcion-enlace">Consultar ayuda →</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- PREGUNTAS FRECUENTES -->
+        <section class="preguntas" id="preguntas-frecuentes">
+            <h2 class="titulo-seccion">Preguntas frecuentes</h2>
+
+            <p class="preguntas-intro">
+                Respuestas a algunas dudas comunes sobre GameMarket.
+            </p>
+
+            <details class="pregunta">
+                <summary>¿Qué es GameMarket?</summary>
+                <div class="respuesta">
+                    GameMarket es un proyecto de tienda en línea enfocado
+                    en videojuegos, consolas, periféricos y productos gamer.
+                    Esta versión es una demostración de su interfaz.
+                </div>
+            </details>
+
+            <details class="pregunta">
+                <summary>¿Cómo puedo encontrar un producto?</summary>
+                <div class="respuesta">
+                    Podés usar el buscador de la parte superior o entrar
+                    en la sección Categorías para explorar los productos
+                    por tipo.
+                </div>
+            </details>
+
+            <details class="pregunta">
+                <summary>¿Cómo agrego un producto al carrito?</summary>
+                <div class="respuesta">
+                    Entrá en la página de un producto y presioná
+                    "Agregar al carrito". Después podrás revisar los
+                    artículos desde la sección Mi carrito.
+                </div>
+            </details>
+
+            <details class="pregunta">
+                <summary>¿Cómo puedo publicar un producto?</summary>
+                <div class="respuesta">
+                    Ingresá en "Vender un producto" y completá el formulario
+                    de publicación. En esta versión de demostración, las
+                    publicaciones todavía no se guardan en un servidor.
+                </div>
+            </details>
+
+            <details class="pregunta">
+                <summary>¿Puedo pagar directamente desde el sitio?</summary>
+                <div class="respuesta">
+                    No por ahora. El carrito permite simular la preparación
+                    de una compra, pero no procesa pagos reales ni pedidos.
+                </div>
+            </details>
+        </section>
+
+        <!-- CONTACTO -->
+        <section class="contacto">
+            <div>
+                <h2>¿Querés seguir explorando?</h2>
+                <p>
+                    Descubrí productos para tu próxima partida.
+                </p>
+            </div>
+
+            <a href="busqueda.html" class="boton">
+                Explorar productos
+            </a>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>© 2026 GameMarket - Tu próximo nivel empieza acá 🎮</p>
+    </footer>
+
+</body>
+</html>

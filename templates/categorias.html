@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías | GameMarket</title>
+
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorias.css') }}">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+        <div class="encabezado-superior">
+
+            <a href="index.html" class="logo">
+                Game<span>Market</span>
+            </a>
+
+            <form class="buscador" action="busqueda.html" method="get">
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Buscar videojuegos, consolas y accesorios..."
+                    aria-label="Buscar productos"
+                >
+                <button type="submit">Buscar</button>
+            </form>
+
+            <a href="carrito.html" class="enlace-carrito">
+                🛒 Mi carrito
+            </a>
+
+        </div>
+
+        <nav class="navegacion">
+            <a href="index.html">Inicio</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="mas_opciones.html">Más opciones</a>
+            <a href="historial.html">Mi historial</a>
+            <a href="publicacion.html">Vender un producto</a>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <div class="migas">
+            <a href="index.html">Inicio</a> / Categorías
+        </div>
+
+        <h1 class="titulo-principal">Explorá nuestras categorías 🎮</h1>
+
+        <p class="introduccion">
+            Encontrá todo lo que necesitás para jugar, competir y armar tu
+            espacio gamer. Explorá nuestras categorías y descubrí productos
+            para todos los niveles.
+        </p>
+
+        <!-- BANNER -->
+        <section class="banner">
+            <div>
+                <h2>Tu próximo nivel empieza acá</h2>
+
+                <p>
+                    Desde consolas y videojuegos hasta periféricos y componentes
+                    para tu PC. Todo tu mundo gamer en un solo lugar.
+                </p>
+
+                <a href="busqueda.html" class="boton-banner">
+                    Explorar productos
+                </a>
+            </div>
+
+            <div class="banner-icono" aria-hidden="true">🎮</div>
+        </section>
+
+        <!-- GRILLA DE CATEGORÍAS -->
+        <section>
+            <h2 class="titulo-seccion">Todas las categorías</h2>
+
+            <p class="subtitulo-seccion">
+                Elegí una categoría para encontrar lo que estás buscando.
+            </p>
+
+            <div class="categorias-grid">
+
+                <a class="categoria" href="busqueda.html?q=consolas">
+                    <div class="categoria-icono morado">🎮</div>
+                    <h3>Consolas</h3>
+                    <p>
+                        PlayStation, Xbox, Nintendo y otras consolas
+                        para disfrutar tus juegos favoritos.
+                    </p>
+                    <span class="ver-categoria">Ver consolas →</span>
+                </a>
+
+                <a class="categoria" href="busqueda.html?q=videojuegos">
+                    <div class="categoria-icono azul">🕹️</div>
+                    <h3>Videojuegos</h3>
+                    <p>
+                        Aventuras, acción, deportes, estrategia y
+                        muchos títulos más.
+                    </p>
+                    <span class="ver-categoria">Ver videojuegos →</span>
+                </a>
+
+                <a class="categoria" href="busqueda.html?q=perifericos">
+                    <div class="categoria-icono verde">⌨️</div>
+                    <h3>Periféricos</h3>
+                    <p>
+                        Teclados, mouse, auriculares y accesorios
+                        para mejorar tu experiencia.
+                    </p>
+                    <span class="ver-categoria">Ver periféricos →</span>
+                </a>
+
+                <a class="categoria" href="busqueda.html?q=componentes">
+                    <div class="categoria-icono naranja">⚙️</div>
+                    <h3>Componentes de PC</h3>
+                    <p>
+                        Placas de video, procesadores, memorias y
+                        componentes para tu computadora.
+                    </p>
+                    <span class="ver-categoria">Ver componentes →</span>
+                </a>
+
+                <a class="categoria" href="busqueda.html?q=pc">
+                    <div class="categoria-icono rosa">🖥️</div>
+                    <h3>Computadoras gamer</h3>
+                    <p>
+                        Equipos armados y computadoras para jugar,
+                        estudiar y crear contenido.
+                    </p>
+                    <span class="ver-categoria">Ver computadoras →</span>
+                </a>
+
+                <a class="categoria" href="busqueda.html?q=accesorios">
+                    <div class="categoria-icono celeste">🔌</div>
+                    <h3>Accesorios</h3>
+                    <p>
+                        Cables, soportes, adaptadores y otros
+                        complementos para tu equipo.
+                    </p>
+                    <span class="ver-categoria">Ver accesorios →</span>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- FRANJA INFERIOR -->
+        <section class="franja">
+            <div>
+                <h2>¿Tenés algo gamer para vender?</h2>
+                <p>
+                    Publicá tus productos y conectá con otros jugadores.
+                </p>
+            </div>
+
+            <a href="publicacion.html" class="boton-principal">
+                Publicar producto
+            </a>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>© 2026 GameMarket - Tu próximo nivel empieza acá 🎮</p>
+    </footer>
+
+    <a href="tal_categoria.html?categoria=consolas">Consolas</a>
+<a href="tal_categoria.html?categoria=videojuegos">Videojuegos</a>
+<a href="tal_categoria.html?categoria=perifericos">Periféricos</a>
+<a href="tal_categoria.html?categoria=componentes">Componentes</a>
+<a href="tal_categoria.html?categoria=pc">PC Gamer</a>
+<a href="tal_categoria.html?categoria=accesorios">Accesorios</a>
+
+</body>
+</html>

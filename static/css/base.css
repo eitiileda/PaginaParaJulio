@@ -1,0 +1,39 @@
+/* Estilos compartidos para las próximas pantallas y módulos */
+:root {
+    --color-fondo: #f3f4f8;
+    --color-texto: #20212a;
+    --color-principal: #6d28d9;
+    --color-encabezado: #17152b;
+    --color-borde: #e8e6f0;
+    --radio: 10px;
+    --sombra-tarjeta: 0 3px 12px #0000000d;
+}
+* { box-sizing: border-box; }
+html { color-scheme: light; }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+}
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+img { max-width: 100%; height: auto; }
+.placeholder-page {
+    width: min(90%, 720px);
+    margin: 12vh auto;
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra-tarjeta);
+}
+.eyebrow { color: var(--color-principal); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.button {
+    display: inline-block;
+    padding: .75rem 1rem;
+    border-radius: 6px;
+    background: var(--color-principal);
+    color: #fff;
+}
+:focus-visible { outline: 3px solid #a78bfa; outline-offset: 2px; }

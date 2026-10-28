@@ -1,0 +1,33 @@
+:root {
+            --ml-yellow: #ffe600;
+            --ml-blue: #3483fa;
+            --ml-bg: #ededed;
+            --ml-text: #333333;
+            --ml-green: #00a650;
+            --ml-gray-light: #f5f5f5;
+            --ml-gray-text: #666666;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--ml-bg); color: var(--ml-text); padding-bottom: 62px; }
+
+        header { background-color: var(--ml-yellow); padding: 14px 16px; display: flex; align-items: center; gap: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .header-back { font-size: 18px; color: var(--ml-text); text-decoration: none; display: flex; align-items: center; }
+        .page-title { font-size: 20px; font-weight: 700; color: #333; }
+
+        .filters-section { background-color: #fff; padding: 12px 16px; border-bottom: 1px solid #e0e0e0; display: flex; gap: 10px; }
+        .filter-dropdown { background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 6px; padding: 6px 12px; font-size: 13px; color: #333; cursor: pointer; outline: none; }
+
+        .content { padding: 16px 12px; max-width: 800px; margin: 0 auto; }
+        .offers-list { display: flex; flex-direction: column; gap: 14px; }
+        .offer-item { display: flex; align-items: center; background-color: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 12px; gap: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); text-decoration: none; color: inherit; transition: background 0.2s; }
+        .offer-item:hover { background-color: #fafafa; }
+        .offer-img { width: 75px; height: 75px; background-color: #f0f0f0; border-radius: 6px; border: 1px solid #ddd; object-fit: cover; flex-shrink: 0; }
+        .offer-details { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+        .offer-price { font-size: 17px; font-weight: 700; color: #333; }
+        .offer-name { font-size: 13px; color: #555; line-height: 1.2; }
+        .offer-discount { font-size: 12px; font-weight: 600; color: #00a650; }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; display: flex; justify-content: space-around; padding: 8px 0; box-shadow: 0 -1px 3px rgba(0,0,0,0.1); z-index: 1000; }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--ml-gray-text); font-size: 10px; gap: 3px; }
+        .bottom-nav-item.active { color: var(--ml-blue); }
+        .bottom-nav-item i { font-size: 18px; }

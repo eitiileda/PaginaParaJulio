@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi historial | GameMarket</title>
+
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/historial.css') }}">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+        <div class="encabezado-superior">
+
+            <a href="index.html" class="logo">
+                Game<span>Market</span>
+            </a>
+
+            <form class="buscador" action="busqueda.html" method="get">
+                <input
+                    type="search"
+                    name="q"
+                    placeholder="Buscar videojuegos, consolas y accesorios..."
+                    aria-label="Buscar productos"
+                >
+                <button type="submit">Buscar</button>
+            </form>
+
+            <a href="carrito.html">🛒 Mi carrito</a>
+
+        </div>
+
+        <nav class="navegacion">
+            <a href="index.html">Inicio</a>
+            <a href="categorias.html">Categorías</a>
+            <a href="mas_opciones.html">Más opciones</a>
+            <a href="historial.html">Mi historial</a>
+            <a href="publicacion.html">Vender un producto</a>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <div class="migas">
+            <a href="index.html">Inicio</a> / Mi historial
+        </div>
+
+        <div class="cabecera-pagina">
+            <div>
+                <h1>Mi historial 👀</h1>
+                <p class="descripcion">
+                    Volvé a encontrar los productos que estuviste mirando.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="boton boton-peligro"
+                id="limpiar-historial"
+            >
+                🗑️ Borrar historial
+            </button>
+        </div>
+
+        <section class="informacion">
+            <div class="informacion-icono">💡</div>
+            <div>
+                <strong>Tus productos vistos recientemente</strong>
+                <p>
+                    Los productos que visites aparecerán acá para que puedas
+                    encontrarlos fácilmente más adelante.
+                </p>
+            </div>
+        </section>
+
+        <section id="seccion-historial">
+            <h2 class="titulo-seccion" id="titulo-historial">
+                Vistos recientemente
+            </h2>
+
+            <div class="productos-grid" id="lista-historial"></div>
+        </section>
+
+        <section class="vacio" id="mensaje-vacio" hidden>
+            <div class="vacio-icono">🕹️</div>
+            <h2>Tu historial está vacío</h2>
+            <p>
+                Cuando visites un producto, lo vas a encontrar acá.
+                Explorá GameMarket y descubrí tu próximo juego favorito.
+            </p>
+            <a href="categorias.html" class="boton boton-principal">
+                Explorar categorías
+            </a>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>© 2026 GameMarket - Tu próximo nivel empieza acá 🎮</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/historial.js') }}" defer></script>
+
+</body>
+</html>
