@@ -2,26 +2,151 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{{ publicacion.producto.nombre if publicacion else "Detalle de publicación" }}</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ publicacion.producto.nombre ~ " | GameMarket" if publicacion else "Publicación no disponible | GameMarket" }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle.css') }}">
 </head>
 <body>
-    <p><a href="{{ url_for('index') }}">&larr; Volver</a></p>
 
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+        <div class="encabezado-superior">
+            <a href="{{ url_for('index') }}" class="logo">Game<span>Market</span></a>
+
+            <form class="buscador" action="{{ url_for('busqueda') }}" method="get">
+                <input type="search" name="q" placeholder="Buscar videojuegos, consolas y accesorios..." aria-label="Buscar productos">
+                <button type="submit">Buscar</button>
+            </form>
+
+            <a href="{{ url_for('carrito') }}">🛒 Mi carrito</a>
+        </div>
+
+        <nav class="navegacion">
+            <a href="{{ url_for('index') }}">Inicio</a>
+            <a href="{{ url_for('categorias') }}">Categorías</a>
+            <a href="{{ url_for('mas_opciones') }}">Más opciones</a>
+            <a href="{{ url_for('historial') }}">Mi historial</a>
+            <a href="{{ url_for('publicacion') }}">Vender un producto</a>
+        </nav>
+    </header>
+
+    <main>
     {% if publicacion %}
-    <h1>{{ publicacion.producto.nombre }}</h1>
-    <p>{{ publicacion.producto.descripcion }}</p>
-    <hr>
-    <p><strong>Descripción del vendedor:</strong> {{ publicacion.descripcion_vendedor }}</p>
-    <p class="precio">${{ publicacion.precio }}</p>
-    <p><strong>Stock disponible:</strong> {{ publicacion.stock }}</p>
-    <p><strong>Estado:</strong> {{ publicacion.estado }}</p>
-    <p><strong>Vendedor:</strong> {{ publicacion.vendedor.nombre }} ({{ publicacion.vendedor.email }})</p>
-    <p><strong>Valoración del vendedor:</strong> {{ publicacion.valoracion }}</p>
+        {% set p = publicacion %}
+        {% set nombres_categoria = {
+            "consolas": "Consolas", "videojuegos": "Videojuegos",
+            "perifericos": "Periféricos", "componentes": "Componentes de PC",
+            "pc": "Computadoras gamer", "accesorios": "Accesorios",
+            "audio": "Audio y micrófonos"
+        } %}
+        {% set categoria = nombres_categoria.get(p.producto.categoria) %}
+        {% set entero = p.precio | int %}
+        {% set centavos = ((p.precio - entero) * 100) | round | int %}
+        {% set disponible = p.estado == "activo" and p.stock > 0 %}
+
+        <div class="migas">
+            <a href="{{ url_for('index') }}">Inicio</a> /
+            <a href="{{ url_for('categorias') }}">Categorías</a>
+            {% if categoria %}/ <span>{{ categoria }}</span>{% endif %}
+            / {{ p.producto.nombre }}
+        </div>
+
+        <div class="ficha">
+
+            <!-- IMAGEN -->
+            <div class="galeria">
+                <div class="imagen-principal">
+                    <span class="imagen-vacia" aria-hidden="true">🎮</span>
+                    {% if p.producto.logo %}
+                    <img src="{{ p.producto.logo }}" alt="{{ p.producto.nombre }}" onerror="this.remove()">
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- INFORMACIÓN -->
+            <section class="info">
+                <p class="subtitulo">
+                    {% if p.condicion %}{{ p.condicion }}{% else %}Producto gamer{% endif %}
+                    {% if categoria %}<span class="punto">|</span> {{ categoria }}{% endif %}
+                </p>
+
+                <h1 class="titulo">{{ p.producto.nombre }}</h1>
+
+                <div class="valoracion" title="Valoración del vendedor">
+                    <span class="numero">{{ "%.1f"|format(p.valoracion|float) }}</span>
+                    <span class="estrellas" style="--porcentaje: {{ (p.valoracion|float / 5 * 100) | round(0) | int }}%" aria-hidden="true">★★★★★</span>
+                </div>
+
+                <p class="precio">
+                    <span class="moneda">$</span>{{ "{:,}".format(entero).replace(",", ".") }}{% if centavos %}<sup>{{ "%02d"|format(centavos) }}</sup>{% endif %}
+                </p>
+
+                {% if p.producto.descripcion %}
+                <h2 class="seccion">Lo que tenés que saber de este producto</h2>
+                <p class="descripcion">{{ p.producto.descripcion }}</p>
+                {% endif %}
+
+                <h2 class="seccion">Características</h2>
+                <table class="caracteristicas">
+                    {% if categoria %}<tr><th>Categoría</th><td>{{ categoria }}</td></tr>{% endif %}
+                    {% if p.condicion %}<tr><th>Condición</th><td>{{ p.condicion }}</td></tr>{% endif %}
+                    <tr><th>Unidades disponibles</th><td>{{ p.stock }}</td></tr>
+                    {% if p.fecha %}<tr><th>Publicado el</th><td>{{ p.fecha.strftime("%d/%m/%Y") }}</td></tr>{% endif %}
+                </table>
+            </section>
+
+            <!-- CAJA DE COMPRA -->
+            <aside class="compra">
+                {% if disponible %}
+                    <p class="stock ok">Stock disponible</p>
+                    <label class="cantidad">
+                        Cantidad:
+                        <select id="cantidad">
+                            {% for i in range(1, ([p.stock, 10] | min) + 1) %}
+                            <option value="{{ i }}">{{ i }} {{ "unidad" if i == 1 else "unidades" }}</option>
+                            {% endfor %}
+                        </select>
+                        <span class="disponibles">({{ p.stock }} disponibles)</span>
+                    </label>
+                    <button type="button" class="boton boton-principal">Comprar ahora</button>
+                    <button type="button" class="boton boton-secundario">Agregar al carrito</button>
+                {% else %}
+                    <p class="stock agotado">
+                        {% if p.estado != "activo" %}Publicación {{ p.estado }}{% else %}Sin stock{% endif %}
+                    </p>
+                    <p class="aviso">Este producto no está disponible por el momento.</p>
+                    <button type="button" class="boton boton-principal" disabled>Comprar ahora</button>
+                {% endif %}
+
+                <div class="vendedor">
+                    <h2>Información del vendedor</h2>
+                    <div class="vendedor-cabecera">
+                        <span class="avatar">{{ p.vendedor.nombre[:1] | upper }}</span>
+                        <div>
+                            <strong>{{ p.vendedor.nombre }}</strong>
+                            <span class="chico">Valoración {{ "%.1f"|format(p.valoracion|float) }} / 5</span>
+                        </div>
+                    </div>
+                    {% if p.descripcion_vendedor %}
+                    <p class="nota-vendedor">{{ p.descripcion_vendedor }}</p>
+                    {% endif %}
+                </div>
+            </aside>
+
+        </div>
+
     {% else %}
-    <h1>Publicación no disponible</h1>
-    <p>Volvé al inicio para explorar productos.</p>
+        <div class="vacio">
+            <h1>Publicación no disponible</h1>
+            <p>Volvé al inicio para explorar productos.</p>
+            <a class="boton boton-principal" href="{{ url_for('index') }}">Ir al inicio</a>
+        </div>
     {% endif %}
+    </main>
+
+    <footer>
+        <p>© 2026 GameMarket - Tu próximo nivel empieza acá 🎮</p>
+    </footer>
+
 </body>
 </html>

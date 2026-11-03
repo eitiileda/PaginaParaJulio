@@ -56,7 +56,7 @@
         <h1 class="titulo-principal">Publicá tu producto 📦</h1>
 
         <p class="introduccion">
-            Completá los datos de tu artículo gamer y prepará tu publicación.
+            Completá los datos de tu artículo gamer y publicalo.
         </p>
 
         <div class="contenido">
@@ -68,7 +68,22 @@
                     <p>Los campos marcados con * son obligatorios.</p>
                 </div>
 
-                <form class="formulario" id="formulario-publicacion">
+                <form class="formulario" id="formulario-publicacion" enctype="multipart/form-data">
+
+                    <div class="grupo">
+                        <label for="vendedor">
+                            Vendedor <span class="obligatorio">*</span>
+                        </label>
+                        <select id="vendedor" name="id_usuario" required>
+                            <option value="">Seleccionar vendedor</option>
+                            {% for v in vendedores %}
+                            <option value="{{ v.id_usuario }}">{{ v.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if not vendedores %}
+                        <p class="ayuda">No hay vendedores cargados en la base de datos.</p>
+                        {% endif %}
+                    </div>
 
                     <div class="grupo">
                         <label for="nombre">
@@ -128,7 +143,7 @@
                                 name="precio"
                                 placeholder="Ej.: 89999"
                                 min="1"
-                                max="999999999"
+                                max="99999999"
                                 step="1"
                                 required
                             >
@@ -206,7 +221,7 @@
                             type="submit"
                             class="boton boton-principal"
                         >
-                            Preparar publicación
+                            Publicar producto
                         </button>
 
                         <button
@@ -261,7 +276,7 @@
 
                 <div class="nota">
                     💡 Así se verá la información principal de tu producto.
-                    Esta vista previa no es una publicación activa.
+                    La publicación se crea al tocar “Publicar producto”.
                 </div>
             </aside>
 

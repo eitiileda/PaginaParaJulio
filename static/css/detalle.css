@@ -1,2 +1,176 @@
-body { font-family: Arial, sans-serif; margin: 20px; }
-        .precio { font-size: 1.4em; font-weight: bold; color: #2a7a2a; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --fondo: #f4f3f9;
+    --blanco: #ffffff;
+    --principal: #6c35d9;
+    --principal-oscuro: #4b20a8;
+    --principal-suave: #f1ebff;
+    --texto: #252238;
+    --gris: #77758a;
+    --borde: #e6e2ef;
+    --verde: #16834a;
+    --rojo: #d83b50;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    line-height: 1.5;
+}
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+
+/* ENCABEZADO */
+.encabezado { background: #211638; color: #fff; padding: 18px 6%; }
+.encabezado-superior { display: flex; align-items: center; justify-content: space-between; gap: 25px; flex-wrap: wrap; }
+.logo { font-size: 27px; font-weight: bold; white-space: nowrap; }
+.logo span { color: #b99aff; }
+.buscador { display: flex; flex: 1; max-width: 600px; }
+.buscador input { width: 100%; padding: 12px 15px; border: none; outline: none; border-radius: 8px 0 0 8px; }
+.buscador button { background: var(--principal); color: #fff; border: none; padding: 0 20px; border-radius: 0 8px 8px 0; }
+.navegacion { display: flex; gap: 25px; margin-top: 18px; flex-wrap: wrap; font-size: 14px; }
+.navegacion a:hover { color: #c8b4ff; }
+
+/* CONTENIDO */
+main { max-width: 1200px; margin: 28px auto 60px; padding: 0 20px; }
+.migas { color: var(--gris); font-size: 14px; margin-bottom: 18px; }
+.migas a { color: var(--principal); }
+.migas a:hover { text-decoration: underline; }
+
+/* FICHA: imagen | info | compra */
+.ficha {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) 320px;
+    gap: 30px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 28px;
+    align-items: start;
+}
+
+/* Imagen */
+.imagen-principal {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--principal-suave);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.imagen-vacia { font-size: 90px; opacity: .55; }
+.imagen-principal img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #fff;
+}
+
+/* Información */
+.subtitulo { color: var(--gris); font-size: 14px; }
+.punto { margin: 0 6px; }
+.titulo { font-size: 26px; line-height: 1.25; margin: 6px 0 10px; overflow-wrap: anywhere; }
+
+.valoracion { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--gris); }
+.estrellas {
+    font-size: 18px;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--principal) var(--porcentaje), #d8d3e6 var(--porcentaje));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.precio { font-size: 40px; font-weight: 400; margin: 14px 0 4px; }
+.precio .moneda { font-size: 28px; margin-right: 6px; }
+.precio sup { font-size: 18px; margin-left: 3px; }
+
+.seccion { font-size: 17px; margin: 24px 0 8px; }
+.descripcion { color: #4a4760; white-space: pre-line; overflow-wrap: anywhere; }
+
+.caracteristicas { width: 100%; border-collapse: collapse; font-size: 14px; }
+.caracteristicas th, .caracteristicas td { padding: 10px 12px; text-align: left; }
+.caracteristicas th { width: 45%; background: var(--principal-suave); font-weight: 700; }
+.caracteristicas tr:nth-child(even) td { background: #faf9fd; }
+
+/* Caja de compra */
+.compra {
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 22px;
+    position: sticky;
+    top: 16px;
+}
+.stock { font-weight: 700; margin-bottom: 12px; }
+.stock.ok { color: var(--principal-oscuro); }
+.stock.agotado { color: var(--rojo); }
+.aviso { color: var(--gris); font-size: 14px; margin-bottom: 14px; }
+
+.cantidad { display: block; font-size: 15px; margin-bottom: 16px; }
+.cantidad select {
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 6px 8px;
+    margin: 0 4px;
+    background: #fff;
+}
+.disponibles { color: var(--gris); font-size: 13px; }
+
+.boton {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 13px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    margin-bottom: 10px;
+    transition: background .15s;
+}
+.boton-principal { background: var(--principal); color: #fff; }
+.boton-principal:hover { background: var(--principal-oscuro); }
+.boton-secundario { background: var(--principal-suave); color: var(--principal-oscuro); }
+.boton-secundario:hover { background: #e4d8ff; }
+.boton:disabled { background: #cfcbdc; color: #fff; cursor: not-allowed; }
+
+.vendedor { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--borde); }
+.vendedor h2 { font-size: 15px; margin-bottom: 12px; }
+.vendedor-cabecera { display: flex; align-items: center; gap: 12px; }
+.avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--principal); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px; flex-shrink: 0;
+}
+.vendedor-cabecera strong { display: block; }
+.chico { color: var(--gris); font-size: 13px; }
+.nota-vendedor { margin-top: 12px; font-size: 14px; color: #4a4760; overflow-wrap: anywhere; }
+
+/* Estado vacío */
+.vacio {
+    background: var(--blanco); border: 1px solid var(--borde);
+    border-radius: 14px; padding: 50px 20px; text-align: center;
+}
+.vacio h1 { margin-bottom: 8px; }
+.vacio p { color: var(--gris); margin-bottom: 20px; }
+.vacio .boton { display: inline-block; width: auto; padding: 13px 28px; }
+
+footer { background: #211638; color: #d9ccf5; text-align: center; padding: 22px; font-size: 14px; }
+
+/* Pantallas medianas y celulares */
+@media (max-width: 1000px) {
+    .ficha { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .compra { grid-column: 1 / -1; position: static; }
+}
+@media (max-width: 680px) {
+    .ficha { grid-template-columns: 1fr; padding: 18px; }
+    .titulo { font-size: 22px; }
+    .precio { font-size: 34px; }
+}
