@@ -7,6 +7,7 @@
     <title>GameMarket | Tu tienda gamer</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/data_fiscal.css') }}">
 </head>
 
 <body>
@@ -109,69 +110,39 @@
 
             <div class="products">
 
+                <!-- Iteramos sobre las publicaciones reales de la base de datos -->
+                {% for pub in publicaciones %}
                 <article class="product">
-                    <div class="product-image">🎮</div>
+                    <!-- Si el producto tiene logo o imagen, podés usar pub.producto.logo, 
+                         si no, dejamos un ícono genérico o el logo guardado -->
+                    <div class="product-image">
+                        {% if pub.producto.logo %}
+                            <img src="{{ pub.producto.logo }}" alt="{{ pub.producto.nombre }}" style="width: 50px;">
+                        {% else %}
+                            🎮
+                        {% endif %}
+                    </div>
 
                     <div class="product-info">
-                        <h3>Joystick inalámbrico</h3>
-                        <p class="price">$89.999</p>
-                        <p class="installments">3 cuotas sin interés</p>
-                        <p class="shipping">Envío gratis</p>
+                        <!-- Mostramos el nombre del producto relacionado -->
+                        <h3>{{ pub.producto.nombre }}</h3>
+                        
+                        <!-- Mostramos el precio real de la publicación -->
+                        <p class="price">${{ pub.precio }}</p>
+                        
+                        <p class="installments">Stock disponible: {{ pub.stock }}</p>
+                        <p class="shipping">Vendedor: {{ pub.vendedor.nombre }}</p>
 
-                        <a href="producto.html?id=1"
-                           class="product-button">
+                        <!-- Enlace dinámico al detalle de la publicación -->
+                        <a href="{{ url_for('detalle_publicacion', id_publicacion=pub.id_publicacion) }}" class="product-button">
                             Ver producto
                         </a>
                     </div>
                 </article>
-
-                <article class="product">
-                    <div class="product-image">🎧</div>
-
-                    <div class="product-info">
-                        <h3>Auriculares gamer con micrófono</h3>
-                        <p class="price">$54.999</p>
-                        <p class="installments">3 cuotas sin interés</p>
-                        <p class="shipping">Envío gratis</p>
-
-                        <a href="producto.html?id=2"
-                           class="product-button">
-                            Ver producto
-                        </a>
-                    </div>
-                </article>
-
-                <article class="product">
-                    <div class="product-image">⌨️</div>
-
-                    <div class="product-info">
-                        <h3>Teclado mecánico RGB</h3>
-                        <p class="price">$72.500</p>
-                        <p class="installments">3 cuotas sin interés</p>
-                        <p class="shipping">Consultar envío</p>
-
-                        <a href="producto.html?id=3"
-                           class="product-button">
-                            Ver producto
-                        </a>
-                    </div>
-                </article>
-
-                <article class="product">
-                    <div class="product-image">🖱️</div>
-
-                    <div class="product-info">
-                        <h3>Mouse gamer RGB</h3>
-                        <p class="price">$32.999</p>
-                        <p class="installments">3 cuotas sin interés</p>
-                        <p class="shipping">Envío gratis</p>
-
-                        <a href="producto.html?id=4"
-                           class="product-button">
-                            Ver producto
-                        </a>
-                    </div>
-                </article>
+                {% else %}
+                    <!-- Esto se muestra si la lista de publicaciones viene vacía -->
+                    <p>No hay productos activos publicados en este momento.</p>
+                {% endfor %}
 
             </div>
         </section>
@@ -195,6 +166,7 @@
 
     <!-- PIE DE PÁGINA -->
     <footer>
+        {% include "_data_fiscal.html" %}
         <p><strong>GameMarket</strong> — Tu espacio gamer.</p>
         <p>Proyecto académico de e-commerce.</p>
         <p>© 2026 GameMarket. Todos los derechos reservados.</p>

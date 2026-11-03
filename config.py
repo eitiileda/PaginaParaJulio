@@ -9,6 +9,6 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-me")
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL",
-        f"sqlite:///{BASE_DIR / 'gamemarket_dev.db'}",
+        "mysql+pymysql://root:e728@localhost:3306/tienda_online"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False

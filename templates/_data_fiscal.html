@@ -1,0 +1,46 @@
+{#
+  ================================================================
+  DATA FISCAL - Formulario 960/D (ARCA)  |  Se muestra en el HOME
+  ================================================================
+  1) Completá los datos de abajo con los de tu emprendimiento.
+  2) Cuando tengas el código real de ARCA, pegá el código que te da ARCA (un
+     script o un enlace con el logo) en la zona "PEGAR ACÁ" y BORRÁ el bloque "qr-provisorio".
+#}
+{% set razon_social = "NoEsteam S.A.S." %}
+{% set cuit         = "20-67.420.069-41" %}
+{% set condicion    = "Responsable Inscripto" %}
+{% set domicilio    = "Neneo, 4462, Puerto Madryn, Chubut" %}
+{% set medios_pago  = ["Tarjeta de crédito", "Tarjeta de débito", "Transferencia bancaria"] %}
+
+<section class="data-fiscal" aria-labelledby="titulo-data-fiscal">
+
+    <div class="data-fiscal-qr">
+        {# ===== PEGAR ACÁ el código que genera ARCA (F960/D para sitios web) ===== #}
+
+        {# ===== BORRAR este bloque cuando pegues el código real ===== #}
+        <div class="qr-provisorio" role="img" aria-label="Espacio reservado para el código QR de ARCA">
+            <span class="qr-icono">▦</span>
+            <span>Acá va el QR de ARCA</span>
+        </div>
+        {# ===== fin del bloque provisorio ===== #}
+    </div>
+
+    <div class="data-fiscal-datos">
+        <h2 id="titulo-data-fiscal">Data Fiscal</h2>
+        <p class="data-fiscal-form">Formulario 960/D · ARCA</p>
+
+        <dl>
+            <dt>Titular</dt>           <dd>{{ razon_social }}</dd>
+            <dt>CUIT</dt>              <dd>{{ cuit }}</dd>
+            <dt>Condición fiscal</dt>  <dd>{{ condicion }}</dd>
+            <dt>Domicilio fiscal</dt>  <dd>{{ domicilio }}</dd>
+            <dt>Formas de pago</dt>    <dd>{{ medios_pago | join(", ") }}</dd>
+        </dl>
+
+        <p class="data-fiscal-nota">
+            Escaneá el código QR con la cámara de tu celular para consultar
+            la situación fiscal de este comercio ante ARCA.
+        </p>
+    </div>
+
+</section>
