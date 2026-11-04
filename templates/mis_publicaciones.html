@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis publicaciones | GameMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cuentas.css') }}">
+</head>
+<body>
+    <main class="management-page">
+        <a class="account-brand" href="{{ url_for('index') }}">Game<span>Market</span></a>
+        <p class="eyebrow">Panel de vendedor</p>
+        <h1>Mis publicaciones</h1>
+        <p>Administrá tus productos. Las publicaciones finalizadas se conservan en tu historial.</p>
+
+        <div class="management-actions">
+            <a class="button" href="{{ url_for('publicacion') }}">Publicar un producto</a>
+            <a href="{{ url_for('perfil') }}">Volver a mi cuenta</a>
+        </div>
+
+        {% for publicacion in publicaciones %}
+        <article class="listing-card">
+            <div class="listing-info">
+                <span class="listing-status status-{{ publicacion.estado }}">{{ publicacion.estado }}</span>
+                <h2>{{ publicacion.producto.nombre }}</h2>
+                <p>${{ "%.2f"|format(publicacion.precio) }} · {{ publicacion.stock }} unidades</p>
+                <p>{{ publicacion.producto.categoria }} · {{ publicacion.condicion or "Sin condición" }}</p>
+            </div>
+            <div class="listing-actions">
+                <a href="{{ url_for('detalle_publicacion', id_publicacion=publicacion.id_publicacion) }}">Ver</a>
+                {% if publicacion.estado != "finalizado" %}
+                <a href="{{ url_for('editar_publicacion', id_publicacion=publicacion.id_publicacion) }}">Editar</a>
+
+                {% if publicacion.estado == "activo" %}
+                <form method="post" action="{{ url_for('cambiar_estado_publicacion', id_publicacion=publicacion.id_publicacion) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="accion" value="pausar">
+                    <button type="submit">Pausar</button>
+                </form>
+                {% elif publicacion.stock > 0 %}
+                <form method="post" action="{{ url_for('cambiar_estado_publicacion', id_publicacion=publicacion.id_publicacion) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="accion" value="activar">
+                    <button type="submit">Activar</button>
+                </form>
+                {% endif %}
+
+                <form method="post" action="{{ url_for('cambiar_estado_publicacion', id_publicacion=publicacion.id_publicacion) }}" onsubmit="return confirm('¿Finalizar esta publicación? No se podrá volver a activar.');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="accion" value="finalizar">
+                    <button class="button-danger" type="submit">Finalizar</button>
+                </form>
+                {% endif %}
+            </div>
+        </article>
+        {% else %}
+        <section class="empty-state">
+            <h2>Todavía no publicaste productos</h2>
+            <p>Cuando publiques tu primer producto, vas a poder administrarlo desde acá.</p>
+            <a class="button" href="{{ url_for('publicacion') }}">Crear mi primera publicación</a>
+        </section>
+        {% endfor %}
+    </main>
+</body>
+</html>

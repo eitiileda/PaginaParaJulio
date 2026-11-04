@@ -97,19 +97,26 @@
 
             <!-- CAJA DE COMPRA -->
             <aside class="compra">
+                {% with mensajes = get_flashed_messages(with_categories=true) %}
+                    {% for categoria_mensaje, mensaje in mensajes %}
+                    <p class="aviso carrito-mensaje {{ categoria_mensaje }}" role="status">{{ mensaje }}</p>
+                    {% endfor %}
+                {% endwith %}
                 {% if disponible %}
                     <p class="stock ok">Stock disponible</p>
-                    <label class="cantidad">
+                    <form action="{{ url_for('agregar_al_carrito', id_publicacion=p.id_publicacion) }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <label class="cantidad" for="cantidad">
                         Cantidad:
-                        <select id="cantidad">
+                        <select id="cantidad" name="cantidad">
                             {% for i in range(1, ([p.stock, 10] | min) + 1) %}
                             <option value="{{ i }}">{{ i }} {{ "unidad" if i == 1 else "unidades" }}</option>
                             {% endfor %}
                         </select>
                         <span class="disponibles">({{ p.stock }} disponibles)</span>
                     </label>
-                    <button type="button" class="boton boton-principal">Comprar ahora</button>
-                    <button type="button" class="boton boton-secundario">Agregar al carrito</button>
+                    <button type="submit" class="boton boton-principal">Agregar al carrito</button>
+                    </form>
                 {% else %}
                     <p class="stock agotado">
                         {% if p.estado != "activo" %}Publicación {{ p.estado }}{% else %}Sin stock{% endif %}

@@ -1,8 +1,10 @@
 """Modelos iniciales. Reflejan las tablas principales de la base de datos."""
+from flask_login import UserMixin
+
 from .extensions import db
 
 
-class Usuario(db.Model):
+class Usuario(UserMixin, db.Model):
     __tablename__ = "usuarios"
 
     id_usuario = db.Column(db.Integer, primary_key=True)
@@ -16,6 +18,9 @@ class Usuario(db.Model):
     logo = db.Column(db.String(255), default="default_avatar.png")
 
     publicaciones = db.relationship("Publicacion", back_populates="vendedor")
+
+    def get_id(self):
+        return str(self.id_usuario)
 
 
 class Producto(db.Model):

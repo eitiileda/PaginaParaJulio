@@ -3,59 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mercado Gamer - Carrito</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Carrito | GameMarket</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
 </head>
 <body>
-
     <header>
-        <a href="{{ url_for('index') }}" class="header-back"><i class="fa-solid fa-arrow-left"></i></a>
-        <h1 class="header-title">Carrito</h1>
+        <a href="{{ url_for('index') }}" class="header-back" aria-label="Volver al inicio">←</a>
+        <h1 class="header-title">Mi carrito</h1>
     </header>
 
     <main class="cart-main">
-        <div class="cart-section">
-            <div class="section-title-custom">Comprados</div>
-            <a href="{{ url_for('producto') }}" class="product-sketch-card">
-                <div class="sketch-img-box"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=150" alt="Control PS5"></div>
-                <div class="sketch-info">
-                    <span class="sketch-estado">Entregado</span>
-                    <span class="sketch-nombre">Control Inalámbrico DualSense Edición Gamer</span>
-                    <span class="sketch-precio">$ 45.990</span>
-                </div>
-            </a>
-            <a href="{{ url_for('producto') }}" class="product-sketch-card">
-                <div class="sketch-img-box"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=150" alt="Juego PS5"></div>
-                <div class="sketch-info">
-                    <span class="sketch-estado">En camino</span>
-                    <span class="sketch-nombre">Videojuego RPG Ficción Coleccionista PS5</span>
-                    <span class="sketch-precio">$ 16.550</span>
-                </div>
-            </a>
-        </div>
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensaje in mensajes %}
+            <p class="cart-message {{ categoria }}" role="status">{{ mensaje }}</p>
+            {% endfor %}
+        {% endwith %}
 
-        <div class="cart-section">
-            <div class="section-title-custom">Encargos</div>
-            <a href="{{ url_for('producto') }}" class="product-sketch-card">
-                <div class="sketch-img-box"><img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=150" alt="PC Gamer"></div>
-                <div class="sketch-info">
-                    <span class="sketch-estado encargo">Pendiente de importación</span>
-                    <span class="sketch-nombre">PC Gamer Armada Intel Core i7 16GB SSD 1TB</span>
-                    <span class="sketch-precio">$ 1.267.105</span>
-                </div>
-            </a>
-        </div>
+        {% if lineas %}
+        <section class="cart-section">
+            <h2 class="section-title-custom">Productos seleccionados</h2>
+            {% for linea in lineas %}
+                {% set publicacion = linea.publicacion %}
+                {% set disponible = publicacion and publicacion.estado == "activo" and publicacion.stock >= linea.cantidad %}
+                {% if publicacion %}
+                <article class="cart-item">
+                    <a class="sketch-img-box" href="{{ url_for('detalle_publicacion', id_publicacion=publicacion.id_publicacion) }}">
+                        {% if publicacion.producto.logo %}
+                        <img src="{{ publicacion.producto.logo }}" alt="{{ publicacion.producto.nombre }}">
+                        {% else %}
+                        <span aria-hidden="true">🎮</span>
+                        {% endif %}
+                    </a>
+                    <div class="sketch-info">
+                        <span class="sketch-estado {{ 'encargo' if not disponible else '' }}">
+                            {% if not disponible %}No disponible o stock insuficiente{% else %}Disponible{% endif %}
+                        </span>
+                        <a class="sketch-nombre" href="{{ url_for('detalle_publicacion', id_publicacion=publicacion.id_publicacion) }}">{{ publicacion.producto.nombre }}</a>
+                        <span class="sketch-precio">${{ "%.2f"|format(publicacion.precio) }} c/u</span>
+                        <span class="cart-subtotal">Subtotal: ${{ "%.2f"|format(publicacion.precio * linea.cantidad) }}</span>
+                        {% if disponible %}
+                        <span class="cart-stock">Stock disponible: {{ publicacion.stock }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="cart-item-actions">
+                        <form method="post" action="{{ url_for('actualizar_carrito', id_publicacion=publicacion.id_publicacion) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <label for="cantidad-{{ publicacion.id_publicacion }}">Cantidad</label>
+                            <input id="cantidad-{{ publicacion.id_publicacion }}" type="number" name="cantidad" min="0" max="{{ publicacion.stock if disponible else 999 }}" value="{{ linea.cantidad }}" required>
+                            <button type="submit">Actualizar</button>
+                        </form>
+                        <form method="post" action="{{ url_for('actualizar_carrito', id_publicacion=publicacion.id_publicacion) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="cantidad" value="0">
+                            <button class="remove-button" type="submit">Quitar</button>
+                        </form>
+                    </div>
+                </article>
+                {% else %}
+                <article class="cart-item unavailable-item">
+                    <div class="sketch-img-box"><span aria-hidden="true">🎮</span></div>
+                    <div class="sketch-info">
+                        <span class="sketch-estado encargo">Este producto ya no existe</span>
+                        <span class="cart-stock">No se podrá confirmar la compra hasta quitarlo.</span>
+                    </div>
+                    <form method="post" action="{{ url_for('actualizar_carrito', id_publicacion=linea.id_publicacion) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="cantidad" value="0">
+                        <button class="remove-button" type="submit">Quitar</button>
+                    </form>
+                </article>
+                {% endif %}
+            {% endfor %}
+        </section>
+
+        <section class="cart-section cart-summary">
+            <h2 class="section-title-custom">Resumen</h2>
+            <p class="summary-total"><span>Total estimado</span><strong>${{ "%.2f"|format(total) }}</strong></p>
+            <p class="payment-note">Esta versión registra la compra y descuenta stock, pero no procesa pagos ni realiza cobros.</p>
+            {% if current_user.is_authenticated %}
+            <form method="post" action="{{ url_for('confirmar_compra') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="checkout-button" type="submit" {% if not puede_confirmar %}disabled{% endif %}>Confirmar compra</button>
+                {% if not puede_confirmar %}<p class="cart-stock">Quitá los productos no disponibles o tus propias publicaciones antes de confirmar.</p>{% endif %}
+            </form>
+            {% else %}
+            <a class="checkout-button" href="{{ url_for('iniciar_sesion', next=url_for('carrito')) }}">Ingresá para confirmar la compra</a>
+            {% endif %}
+        </section>
+        {% else %}
+        <section class="cart-section empty-cart">
+            <div class="empty-cart-icon" aria-hidden="true">🛒</div>
+            <h2>Tu carrito está vacío</h2>
+            <p>Explorá el catálogo y agregá los productos que te interesan.</p>
+            <a class="checkout-button" href="{{ url_for('index') }}">Explorar productos</a>
+        </section>
+        {% endif %}
     </main>
 
     <nav class="bottom-nav">
-        <a href="{{ url_for('index') }}" class="bottom-nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
-        <a href="{{ url_for('categorias') }}" class="bottom-nav-item"><i class="fa-solid fa-tags"></i><span>Categorías</span></a>
-        <a href="{{ url_for('carrito') }}" class="bottom-nav-item active"><i class="fa-solid fa-cart-shopping"></i><span>Carrito</span></a>
-        <a href="{{ url_for('publicacion') }}" class="bottom-nav-item"><i class="fa-solid fa-circle-plus"></i><span>Vender</span></a>
-        <a href="{{ url_for('chats') }}" class="bottom-nav-item"><i class="fa-solid fa-comments"></i><span>Chats</span></a>
+        <a href="{{ url_for('index') }}" class="bottom-nav-item"><span aria-hidden="true">⌂</span><span>Inicio</span></a>
+        <a href="{{ url_for('categorias') }}" class="bottom-nav-item"><span aria-hidden="true">◆</span><span>Categorías</span></a>
+        <a href="{{ url_for('carrito') }}" class="bottom-nav-item active"><span aria-hidden="true">🛒</span><span>Carrito</span></a>
+        <a href="{{ url_for('perfil') if current_user.is_authenticated else url_for('iniciar_sesion') }}" class="bottom-nav-item"><span aria-hidden="true">●</span><span>Cuenta</span></a>
     </nav>
-
 </body>
 </html>
