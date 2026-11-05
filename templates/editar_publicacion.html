@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar publicación | GameMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cuentas.css') }}">
+</head>
+<body>
+    <main class="account-card">
+        <a class="account-brand" href="{{ url_for('index') }}">Game<span>Market</span></a>
+        <p class="eyebrow">Panel de vendedor</p>
+        <h1>Editar publicación</h1>
+        {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label for="nombre">Nombre del producto</label>
+            <input id="nombre" name="nombre" type="text" maxlength="100" required value="{{ valores.get('nombre', publicacion.producto.nombre) }}">
+
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" required>
+                {% for categoria in categorias %}
+                <option value="{{ categoria }}" {% if valores.get('categoria', publicacion.producto.categoria) == categoria %}selected{% endif %}>{{ categoria|capitalize }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="condicion">Condición</label>
+            <select id="condicion" name="condicion" required>
+                {% for condicion in condiciones %}
+                <option value="{{ condicion }}" {% if valores.get('condicion', publicacion.condicion) == condicion %}selected{% endif %}>{{ condicion }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" maxlength="1500" required>{{ valores.get('descripcion', publicacion.producto.descripcion or '') }}</textarea>
+
+            <label for="precio">Precio (ARS)</label>
+            <input id="precio" name="precio" type="number" min="0.01" max="99999999.99" step="0.01" required value="{{ valores.get('precio', publicacion.precio) }}">
+
+            <label for="stock">Unidades disponibles</label>
+            <input id="stock" name="stock" type="number" min="0" max="9999" step="1" required value="{{ valores.get('stock', publicacion.stock) }}">
+            <small>Con stock 0 la publicación no se mostrará disponible.</small>
+
+            <button type="submit">Guardar cambios</button>
+        </form>
+        <a class="back-link" href="{{ url_for('mis_publicaciones') }}">Cancelar y volver</a>
+    </main>
+</body>
+</html>

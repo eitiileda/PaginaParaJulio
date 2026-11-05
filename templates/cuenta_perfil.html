@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi cuenta | GameMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cuentas.css') }}">
+</head>
+<body>
+    <main class="account-card">
+        <a class="account-brand" href="{{ url_for('index') }}">Game<span>Market</span></a>
+        <p class="eyebrow">Mi cuenta</p>
+        <h1>Hola, {{ usuario.nombre }}</h1>
+        <dl class="profile-details">
+            <div><dt>Correo electrónico</dt><dd>{{ usuario.email }}</dd></div>
+            <div><dt>Cuenta</dt><dd>{{ "Vendedor" if usuario.vendedor else "Comprador" }}</dd></div>
+            <div><dt>Miembro desde</dt><dd>{{ usuario.fecha_registro.strftime("%d/%m/%Y") if usuario.fecha_registro else "—" }}</dd></div>
+        </dl>
+        {% if not usuario.vendedor %}
+        <form action="{{ url_for('habilitar_ventas') }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Habilitar mi cuenta para vender</button>
+        </form>
+        {% else %}
+        <p>Tu cuenta está habilitada para publicar productos.</p>
+        <a class="button" href="{{ url_for('mis_publicaciones') }}">Mis publicaciones</a>
+        {% endif %}
+        <form action="{{ url_for('cerrar_sesion') }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Cerrar sesión</button>
+        </form>
+        <a class="back-link" href="{{ url_for('index') }}">Volver al inicio</a>
+    </main>
+</body>
+</html>

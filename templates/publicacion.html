@@ -69,21 +69,9 @@
                 </div>
 
                 <form class="formulario" id="formulario-publicacion" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-                    <div class="grupo">
-                        <label for="vendedor">
-                            Vendedor <span class="obligatorio">*</span>
-                        </label>
-                        <select id="vendedor" name="id_usuario" required>
-                            <option value="">Seleccionar vendedor</option>
-                            {% for v in vendedores %}
-                            <option value="{{ v.id_usuario }}">{{ v.nombre }}</option>
-                            {% endfor %}
-                        </select>
-                        {% if not vendedores %}
-                        <p class="ayuda">No hay vendedores cargados en la base de datos.</p>
-                        {% endif %}
-                    </div>
+                    <p class="ayuda">Publicando como <strong>{{ current_user.nombre }}</strong>.</p>
 
                     <div class="grupo">
                         <label for="nombre">
