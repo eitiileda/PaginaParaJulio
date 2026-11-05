@@ -78,6 +78,25 @@
             color: #c4b5fd;
         }
 
+        .header-links .account-logout {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        .account-logout button {
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font-size: inherit;
+            cursor: pointer;
+        }
+
+        .account-logout button:hover {
+            color: #c4b5fd;
+        }
+
         /* NAVEGACIÓN */
 
         nav {
@@ -363,4 +382,3 @@
 /* Reglas que antes estaban escritas directamente en index.html */
 .seller-description { margin-bottom: 18px; line-height: 1.6; }
 .seller-button { background-color: #6d28d9; color: #fff; }
-

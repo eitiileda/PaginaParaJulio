@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar | GameMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cuentas.css') }}">
+</head>
+<body>
+    <main class="account-card">
+        <a class="account-brand" href="{{ url_for('index') }}">Game<span>Market</span></a>
+        <p class="eyebrow">Tu cuenta</p>
+        <h1>Ingresar</h1>
+        <p>Entrá para continuar en GameMarket.</p>
+
+        {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label for="email">Correo electrónico</label>
+            <input id="email" name="email" type="email" maxlength="150" value="{{ email }}" autocomplete="email" required>
+
+            <label for="contrasena">Contraseña</label>
+            <input id="contrasena" name="contrasena" type="password" maxlength="128" autocomplete="current-password" required>
+
+            <button type="submit">Ingresar</button>
+        </form>
+        <p class="account-switch">¿Todavía no tenés cuenta? <a href="{{ url_for('registro', next=request.args.get('next', '')) }}">Crear cuenta</a></p>
+        <a class="back-link" href="{{ url_for('index') }}">Volver al inicio</a>
+    </main>
+</body>
+</html>

@@ -7,7 +7,6 @@ const formulario = document.getElementById("formulario-publicacion");
         const campoStock = document.getElementById("stock");
         const campoDescripcion = document.getElementById("descripcion");
         const campoImagen = document.getElementById("imagen");
-        const campoVendedor = document.getElementById("vendedor");
         const botonEnviar = formulario.querySelector("button[type=submit]");
 
         const mensaje = document.getElementById("mensaje");
@@ -134,7 +133,7 @@ const formulario = document.getElementById("formulario-publicacion");
             const stock = Number(campoStock.value);
             const descripcion = campoDescripcion.value.trim();
 
-            if (!campoVendedor.value || !nombre || !campoCategoria.value ||
+            if (!nombre || !campoCategoria.value ||
                 !campoEstado.value || !descripcion) {
                 mostrarMensaje(
                     "Completá todos los campos obligatorios.",
@@ -171,12 +170,7 @@ const formulario = document.getElementById("formulario-publicacion");
                     body: new FormData(formulario)
                 });
 
-                let datos = {};
-                try {
-                    datos = await respuesta.json();
-                } catch (_) {
-                    // El servidor devolvió algo que no es JSON (error 500, etc.)
-                }
+                const datos = await respuesta.json();
 
                 if (!respuesta.ok) {
                     throw new Error(

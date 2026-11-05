@@ -33,6 +33,16 @@
             <div class="header-links">
                 <a href="historial.html">Historial</a>
                 <a href="carrito.html">🛒 Carrito</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('perfil') }}">Hola, {{ current_user.nombre }}</a>
+                    <form action="{{ url_for('cerrar_sesion') }}" method="post" class="account-logout">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit">Salir</button>
+                    </form>
+                {% else %}
+                    <a href="{{ url_for('iniciar_sesion') }}">Ingresar</a>
+                    <a href="{{ url_for('registro') }}">Crear cuenta</a>
+                {% endif %}
             </div>
 
         </div>
