@@ -7,6 +7,7 @@ const formulario = document.getElementById("formulario-publicacion");
         const campoStock = document.getElementById("stock");
         const campoDescripcion = document.getElementById("descripcion");
         const campoImagen = document.getElementById("imagen");
+        const botonEnviar = formulario.querySelector("button[type=submit]");
 
         const mensaje = document.getElementById("mensaje");
         const vistaImagen = document.getElementById("vista-imagen");
@@ -124,7 +125,7 @@ const formulario = document.getElementById("formulario-publicacion");
             imagenPrevia.appendChild(imagen);
         });
 
-        formulario.addEventListener("submit", function(evento) {
+        formulario.addEventListener("submit", async function(evento) {
             evento.preventDefault();
 
             const nombre = campoNombre.value.trim();
@@ -142,9 +143,9 @@ const formulario = document.getElementById("formulario-publicacion");
             }
 
             if (!Number.isInteger(precio) || precio <= 0 ||
-                precio > 999999999) {
+                precio > 99999999) {
                 mostrarMensaje(
-                    "Ingresá un precio entero válido y mayor que cero.",
+                    "Ingresá un precio entero válido, mayor que cero y menor a 100 millones.",
                     "error"
                 );
                 return;
@@ -158,12 +159,46 @@ const formulario = document.getElementById("formulario-publicacion");
                 return;
             }
 
-            mostrarMensaje(
-                "¡Formulario validado! La vista previa está lista. " +
-                "Para publicar y guardar productos de verdad, " +
-                "necesitamos conectar esta página con una base de datos.",
-                "exito"
-            );
+            // Envío real al servidor (multipart: texto + imagen).
+            // No se fija Content-Type a mano: el navegador agrega el boundary.
+            botonEnviar.disabled = true;
+            mostrarMensaje("Publicando...", "exito");
+
+            try {
+                const respuesta = await fetch("/api/publicaciones", {
+                    method: "POST",
+                    body: new FormData(formulario)
+                });
+
+                const datos = await respuesta.json();
+
+                if (!respuesta.ok) {
+                    throw new Error(
+                        datos.error ||
+                        "No se pudo publicar (error " + respuesta.status + ")."
+                    );
+                }
+
+                formulario.reset();
+                // El handler de "reset" limpia el mensaje con setTimeout(0),
+                // por eso mostramos el éxito un instante después.
+                setTimeout(function() {
+                    mostrarMensaje("¡Producto publicado! ", "exito");
+                    const enlace = document.createElement("a");
+                    enlace.href = datos.url;
+                    enlace.textContent = "Ver publicación";
+                    mensaje.appendChild(enlace);
+                }, 10);
+            } catch (error) {
+                mostrarMensaje(
+                    error instanceof TypeError
+                        ? "No hay conexión con el servidor."
+                        : error.message,
+                    "error"
+                );
+            } finally {
+                botonEnviar.disabled = false;
+            }
         });
 
         function mostrarMensaje(texto, tipo) {

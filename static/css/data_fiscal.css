@@ -1,0 +1,61 @@
+/* Bloque Data Fiscal (Formulario 960/D) - Home */
+.data-fiscal {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    max-width: 900px;
+    margin: 10px auto 28px;
+    padding: 24px 28px;
+    background: #ffffff;
+    border: 1px solid #e6e2ef;
+    border-left: 6px solid #6c35d9;
+    border-radius: 14px;
+    color: #252238;
+    text-align: left;
+}
+.data-fiscal-qr {
+    flex: 0 0 160px;
+    display: flex;
+    justify-content: center;
+}
+.data-fiscal-qr img,
+.data-fiscal-qr svg { max-width: 160px; height: auto; }
+
+.qr-provisorio {
+    width: 160px;
+    height: 160px;
+    border: 2px dashed #b99aff;
+    border-radius: 12px;
+    background: #f1ebff;
+    color: #4b20a8;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.qr-icono { font-size: 54px; line-height: 1; }
+
+.data-fiscal-datos { flex: 1; min-width: 0; }
+.data-fiscal h2 { font-size: 20px; color: #4b20a8; }
+.data-fiscal-form { color: #77758a; font-size: 13px; margin-bottom: 12px; }
+
+.data-fiscal dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.data-fiscal dt { font-weight: 700; }
+.data-fiscal dd { margin: 0; overflow-wrap: anywhere; }
+
+.data-fiscal-nota { margin-top: 14px; font-size: 13px; color: #77758a; line-height: 1.5; }
+
+@media (max-width: 640px) {
+    .data-fiscal { flex-direction: column; text-align: center; padding: 22px 18px; }
+    .data-fiscal dl { text-align: left; }
+}

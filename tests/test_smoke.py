@@ -43,12 +43,17 @@ def test_home_page_loads(client):
     "/historial.html",
     "/mas_opciones.html",
     "/ofertas.html",
-    "/publicacion.html",
     "/chats.html",
 ])
 def test_prototype_pages_load(client, path):
     response = client.get(path)
     assert response.status_code == 200
+
+
+def test_publication_form_requires_login(client):
+    response = client.get("/publicacion.html")
+    assert response.status_code == 302
+    assert response.location.startswith("/cuenta/ingresar?next=")
 
 
 def test_detail_without_id_returns_home(client):

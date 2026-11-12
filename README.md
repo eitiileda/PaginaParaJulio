@@ -63,18 +63,23 @@ Si la contraseña contiene caracteres especiales, deben codificarse para una URL
 - La carga de publicaciones tiene validación básica y rollback ante errores.
 - Los modelos se agruparon en un módulo.
 - La base local se crea al iniciar. Para una aplicación real conviene incorporar migraciones con Flask-Migrate/Alembic.
-- Muchas pantallas siguen siendo prototipos visuales con productos ficticios y lógica en el navegador. Todavía no hay autenticación, autorización, pagos reales ni sincronización completa con MySQL.
+- Las cuentas permiten registrarse, ingresar, cerrar sesión y consultar un perfil. Las contraseñas se guardan como hashes y los formularios usan protección CSRF. La creación de cuenta permite optar por el rol de vendedor y también se puede habilitar desde el perfil.
+- Crear publicaciones requiere una sesión y una cuenta habilitada para vender. El servidor asigna la publicación al usuario autenticado; no confía en un vendedor enviado por el navegador. Esto aplica tanto al formulario actual como al formulario antiguo.
+- Desde “Mis publicaciones”, cada vendedor puede ver y editar sus propios avisos, pausarlos, reactivarlos o finalizarlos. Finalizar conserva el registro (incluidas las referencias de compras) y no permite volver a activar el aviso. La portada solo muestra publicaciones activas con stock disponible.
+- El carrito funciona para visitantes y conserva sus artículos durante el inicio de sesión o registro en ese navegador. Al confirmar, el servidor revalida disponibilidad y precios, registra las compras y descuenta stock en una transacción. No hay integración de pago ni se realizan cobros; todavía no está implementado el historial dinámico de compras.
+- Muchas pantallas siguen siendo prototipos visuales con productos ficticios y lógica en el navegador. Todavía no hay pagos reales ni sincronización completa con MySQL.
 - `database/schema_demo_original.sql` se conserva como referencia del archivo anterior. Sus usuarios/contraseñas y números de tarjeta de ejemplo son datos inseguros y no deben usarse en un entorno real. El esquema nuevo evita guardar números de tarjeta y recomienda guardar hashes de contraseña.
+
+Para un despliegue, configurá `SECRET_KEY` con un valor aleatorio privado y activá `SESSION_COOKIE_SECURE=1` cuando la aplicación se sirva por HTTPS. La clave predeterminada solo sirve para desarrollo local.
 
 ## Próximos módulos sugeridos
 
-1. Autenticación y sesiones.
-2. CRUD de productos y publicaciones.
-3. Búsqueda y filtros conectados a la base de datos.
-4. Carrito y órdenes.
-5. Perfil de vendedor y reputación.
-6. Mensajes entre usuarios.
-7. Pruebas automatizadas y migraciones de base de datos.
+1. Historial de compras y seguimiento de órdenes.
+2. Búsqueda y filtros conectados a la base de datos.
+3. Integración de pagos.
+4. Perfil de vendedor y reputación.
+5. Mensajes entre usuarios.
+6. Pruebas automatizadas y migraciones de base de datos.
 
 ## Convención de trabajo
 

@@ -1,8 +1,10 @@
 """Modelos iniciales. Reflejan las tablas principales de la base de datos."""
+from flask_login import UserMixin
+
 from .extensions import db
 
 
-class Usuario(db.Model):
+class Usuario(UserMixin, db.Model):
     __tablename__ = "usuarios"
 
     id_usuario = db.Column(db.Integer, primary_key=True)
@@ -17,6 +19,9 @@ class Usuario(db.Model):
 
     publicaciones = db.relationship("Publicacion", back_populates="vendedor")
 
+    def get_id(self):
+        return str(self.id_usuario)
+
 
 class Producto(db.Model):
     __tablename__ = "productos"
@@ -24,6 +29,7 @@ class Producto(db.Model):
     id_producto = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.Text)
+    categoria = db.Column(db.String(50))
     logo = db.Column(db.String(255))
 
     publicaciones = db.relationship("Publicacion", back_populates="producto")
@@ -38,6 +44,7 @@ class Publicacion(db.Model):
     stock = db.Column(db.Integer, default=1, nullable=False)
     precio = db.Column(db.Numeric(10, 2), nullable=False)
     estado = db.Column(db.Enum("activo", "pausado", "finalizado", name="estado_publicacion"), default="activo")
+    condicion = db.Column(db.String(20))  # Nuevo / Usado / Reacondicionado
     descripcion_vendedor = db.Column(db.String(255))
     valoracion = db.Column(db.Numeric(3, 2), default=5.00)
     fecha = db.Column(db.DateTime, server_default=db.func.current_timestamp())

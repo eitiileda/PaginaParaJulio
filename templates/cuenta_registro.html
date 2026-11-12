@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta | GameMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cuentas.css') }}">
+</head>
+<body>
+    <main class="account-card">
+        <a class="account-brand" href="{{ url_for('index') }}">Game<span>Market</span></a>
+        <p class="eyebrow">Sumate a GameMarket</p>
+        <h1>Crear cuenta</h1>
+        <p>Registrate para tener tu perfil en la comunidad.</p>
+
+        {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
+
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" maxlength="100" value="{{ datos.nombre }}" autocomplete="name" required>
+
+            <label for="email">Correo electrónico</label>
+            <input id="email" name="email" type="email" maxlength="150" value="{{ datos.email }}" autocomplete="email" required>
+
+            <label for="contrasena">Contraseña</label>
+            <input id="contrasena" name="contrasena" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+            <small>Usá entre 8 y 128 caracteres.</small>
+
+            <label for="confirmacion">Repetir contraseña</label>
+            <input id="confirmacion" name="confirmacion" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+
+            <label class="checkbox-label">
+                <input type="checkbox" name="vendedor" value="1">
+                También quiero vender productos
+            </label>
+
+            <button type="submit">Crear cuenta</button>
+        </form>
+        <p class="account-switch">¿Ya tenés cuenta? <a href="{{ url_for('iniciar_sesion', next=next_url) }}">Ingresar</a></p>
+        <a class="back-link" href="{{ url_for('index') }}">Volver al inicio</a>
+    </main>
+</body>
+</html>

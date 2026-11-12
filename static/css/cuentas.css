@@ -1,0 +1,139 @@
+:root {
+    color-scheme: light;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #20212a;
+    background: #f3f4f8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 2rem 1rem;
+    display: grid;
+    place-items: center;
+}
+
+a { color: #5b21b6; }
+
+.account-card {
+    width: min(100%, 440px);
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid #e8e6f0;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px #17152b12;
+}
+
+.account-brand {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: #17152b;
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.account-brand span { color: #6d28d9; }
+.eyebrow { margin-bottom: .35rem; color: #6d28d9; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+h1 { margin: 0 0 .5rem; }
+.account-card > p { line-height: 1.5; }
+
+.account-card form:not(.account-switch) {
+    display: grid;
+    gap: .6rem;
+    margin-top: 1.5rem;
+}
+
+.account-card label { margin-top: .35rem; font-weight: 700; }
+.account-card input:not([type="checkbox"]) {
+    width: 100%;
+    min-height: 44px;
+    padding: .65rem .75rem;
+    border: 1px solid #c9c6d3;
+    border-radius: 6px;
+}
+.account-card select,
+.account-card textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: .65rem .75rem;
+    border: 1px solid #c9c6d3;
+    border-radius: 6px;
+    background: #fff;
+}
+.account-card textarea { min-height: 120px; resize: vertical; }
+.account-card input:focus-visible { outline: 3px solid #a78bfa; outline-offset: 2px; }
+.account-card select:focus-visible,
+.account-card textarea:focus-visible { outline: 3px solid #a78bfa; outline-offset: 2px; }
+.account-card small { color: #5e5d68; }
+
+.account-card .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    margin: .7rem 0;
+    font-weight: 400;
+}
+.checkbox-label input { width: 1rem; height: 1rem; }
+
+.account-card button {
+    min-height: 46px;
+    margin-top: .5rem;
+    border: 0;
+    border-radius: 6px;
+    background: #6d28d9;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+.account-card button:hover { background: #5b21b6; }
+
+.form-error {
+    padding: .75rem;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.account-switch { margin-top: 1.25rem; }
+.back-link { display: inline-block; margin-top: .75rem; }
+
+.profile-details { margin: 1.5rem 0; }
+.profile-details div { padding: .8rem 0; border-bottom: 1px solid #e8e6f0; }
+.profile-details dt { color: #5e5d68; font-size: .9rem; }
+.profile-details dd { margin: .3rem 0 0; overflow-wrap: anywhere; font-weight: 700; }
+
+.management-page {
+    width: min(100%, 900px);
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid #e8e6f0;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px #17152b12;
+}
+.management-page h1 { margin-bottom: .5rem; }
+.management-page > p { line-height: 1.5; }
+.management-actions,
+.listing-actions { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+.management-actions { margin: 1.25rem 0; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: .65rem .9rem; border-radius: 6px; background: #6d28d9; color: #fff; font-weight: 700; }
+.listing-card { display: flex; justify-content: space-between; gap: 1.25rem; padding: 1.25rem 0; border-top: 1px solid #e8e6f0; }
+.listing-info h2 { margin: .4rem 0; font-size: 1.1rem; }
+.listing-info p { margin: .35rem 0; }
+.listing-status { padding: .25rem .55rem; border-radius: 999px; background: #eee; font-size: .8rem; font-weight: 700; text-transform: capitalize; }
+.status-activo { background: #dcfce7; color: #166534; }
+.status-pausado { background: #fef3c7; color: #92400e; }
+.status-finalizado { background: #e5e7eb; color: #374151; }
+.listing-actions form { margin: 0; }
+.listing-actions button { min-height: 38px; margin: 0; padding: .5rem .7rem; }
+.listing-actions .button-danger { background: #b91c1c; }
+.listing-actions .button-danger:hover { background: #991b1b; }
+.empty-state { margin-top: 1.5rem; padding: 1.5rem; border: 1px dashed #c9c6d3; border-radius: 8px; }
+.empty-state h2 { margin-top: 0; }
+
+@media (max-width: 640px) {
+    .management-page { padding: 1.25rem; }
+    .listing-card { flex-direction: column; }
+}
