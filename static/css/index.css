@@ -6,8 +6,8 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #f3f4f8;
-            color: #20212a;
+            background-color: #eff6f1;
+            color: #27332c;
         }
 
         a {
@@ -18,7 +18,7 @@
         /* ENCABEZADO */
 
         header {
-            background-color: #17152b;
+            background-color: #13271d;
             color: white;
             padding: 18px 6%;
         }
@@ -34,7 +34,7 @@
         .logo {
             font-size: 27px;
             font-weight: bold;
-            color: #a78bfa;
+            color: #1ab462;
             white-space: nowrap;
         }
 
@@ -62,7 +62,7 @@
             padding: 12px 18px;
             border: none;
             border-radius: 0 6px 6px 0;
-            background-color: #8b5cf6;
+            background-color: #148d4d;
             color: white;
             cursor: pointer;
         }
@@ -75,7 +75,7 @@
         }
 
         .header-links a:hover {
-            color: #c4b5fd;
+            color: #1fdb5e;
         }
 
         .header-links .account-logout {
@@ -94,13 +94,13 @@
         }
 
         .account-logout button:hover {
-            color: #c4b5fd;
+            color: #1fdb5e;
         }
 
         /* NAVEGACIÓN */
 
         nav {
-            background-color: #24213e;
+            background-color: #1f3a2b;
             padding: 13px 6%;
         }
 
@@ -112,12 +112,12 @@
         }
 
         nav a {
-            color: #e6e3f5;
+            color: #ccedd7;
             font-size: 14px;
         }
 
         nav a:hover {
-            color: #a78bfa;
+            color: #1ab462;
         }
 
         /* CONTENIDO PRINCIPAL */
@@ -129,7 +129,7 @@
         }
 
         .hero {
-            background: linear-gradient(120deg, #31205f, #6d28d9);
+            background: linear-gradient(120deg, #18462d, #18894d);
             color: white;
             padding: 45px;
             border-radius: 14px;
@@ -152,20 +152,20 @@
         .hero p {
             line-height: 1.6;
             margin-bottom: 22px;
-            color: #e9ddff;
+            color: #a9f3c2;
         }
 
         .hero-button {
             display: inline-block;
             padding: 12px 22px;
             background-color: white;
-            color: #5425a8;
+            color: #186d40;
             font-weight: bold;
             border-radius: 6px;
         }
 
         .hero-button:hover {
-            background-color: #ede9fe;
+            background-color: #c6f7d7;
         }
 
         .hero-icon {
@@ -236,7 +236,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #eeedf5;
+            background-color: #e5f1e9;
             font-size: 75px;
         }
 
@@ -270,7 +270,7 @@
 
         .product-button {
             display: block;
-            background-color: #6d28d9;
+            background-color: #18894d;
             color: white;
             text-align: center;
             padding: 10px;
@@ -279,14 +279,14 @@
         }
 
         .product-button:hover {
-            background-color: #5420ad;
+            background-color: #146c3d;
         }
 
         /* PIE DE PÁGINA */
 
         footer {
-            background-color: #17152b;
-            color: #c9c5df;
+            background-color: #13271d;
+            color: #abd1bc;
             text-align: center;
             padding: 28px 15px;
             margin-top: 50px;
@@ -375,10 +375,10 @@
 }
 
 .seller-button {
-    background-color: #6d28d9;
+    background-color: #18894d;
     color: white;
 }
 
 /* Reglas que antes estaban escritas directamente en index.html */
 .seller-description { margin-bottom: 18px; line-height: 1.6; }
-.seller-button { background-color: #6d28d9; color: #fff; }
+.seller-button { background-color: #18894d; color: #fff; }

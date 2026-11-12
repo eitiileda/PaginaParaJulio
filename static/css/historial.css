@@ -5,13 +5,13 @@
         }
 
         :root {
-            --fondo: #f4f3f9;
+            --fondo: #edf6f0;
             --blanco: #ffffff;
-            --principal: #6c35d9;
-            --principal-oscuro: #4b20a8;
-            --texto: #252238;
-            --gris: #77758a;
-            --borde: #e6e2ef;
+            --principal: #1b8d50;
+            --principal-oscuro: #14673b;
+            --texto: #23392d;
+            --gris: #697c71;
+            --borde: #d6e8dc;
             --rojo: #d83b50;
         }
 
@@ -38,7 +38,7 @@
         /* ENCABEZADO */
 
         .encabezado {
-            background: #211638;
+            background: #122f20;
             color: white;
             padding: 18px 6%;
         }
@@ -58,7 +58,7 @@
         }
 
         .logo span {
-            color: #b99aff;
+            color: #1cc46a;
         }
 
         .buscador {
@@ -92,7 +92,7 @@
         }
 
         .navegacion a:hover {
-            color: #c8b4ff;
+            color: #1fdc5e;
         }
 
         /* CONTENIDO */
@@ -154,7 +154,7 @@
         }
 
         .boton-borde:hover {
-            background: #f3edff;
+            background: #d3f9e0;
         }
 
         .boton-peligro {
@@ -208,12 +208,12 @@
 
         .tarjeta:hover {
             transform: translateY(-4px);
-            box-shadow: 0 9px 24px #30205215;
+            box-shadow: 0 9px 24px #1a422d15;
         }
 
         .producto-imagen {
             height: 175px;
-            background: #eee7ff;
+            background: #c3f6d4;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -283,8 +283,8 @@
         /* PIE */
 
         footer {
-            background: #211638;
-            color: #ddd5ef;
+            background: #122f20;
+            color: #b6e3c5;
             padding: 28px 20px;
             text-align: center;
             font-size: 13px;

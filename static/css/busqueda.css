@@ -6,8 +6,8 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #f3f4f8;
-            color: #20212a;
+            background-color: #eff6f1;
+            color: #27332c;
         }
 
         a {
@@ -22,7 +22,7 @@
         /* ENCABEZADO */
 
         header {
-            background-color: #17152b;
+            background-color: #13271d;
             color: white;
             padding: 18px 6%;
         }
@@ -38,7 +38,7 @@
         .logo {
             font-size: 27px;
             font-weight: bold;
-            color: #a78bfa;
+            color: #1ab462;
             white-space: nowrap;
         }
 
@@ -65,13 +65,13 @@
             padding: 12px 18px;
             border: none;
             border-radius: 0 6px 6px 0;
-            background-color: #8b5cf6;
+            background-color: #148d4d;
             color: white;
             cursor: pointer;
         }
 
         .search button:hover {
-            background-color: #7c3aed;
+            background-color: #117640;
         }
 
         .header-links {
@@ -82,13 +82,13 @@
         }
 
         .header-links a:hover {
-            color: #c4b5fd;
+            color: #1fdb5e;
         }
 
         /* NAVEGACIÓN */
 
         nav {
-            background-color: #24213e;
+            background-color: #1f3a2b;
             padding: 13px 6%;
         }
 
@@ -100,12 +100,12 @@
         }
 
         nav a {
-            color: #e6e3f5;
+            color: #ccedd7;
             font-size: 14px;
         }
 
         nav a:hover {
-            color: #a78bfa;
+            color: #1ab462;
         }
 
         /* CONTENIDO */
@@ -118,12 +118,12 @@
 
         .breadcrumb {
             font-size: 14px;
-            color: #77758a;
+            color: #697c71;
             margin-bottom: 22px;
         }
 
         .breadcrumb a:hover {
-            color: #6d28d9;
+            color: #18894d;
         }
 
         .page-title {
@@ -132,7 +132,7 @@
         }
 
         .page-description {
-            color: #77758a;
+            color: #697c71;
             line-height: 1.6;
             margin-bottom: 25px;
         }
@@ -148,12 +148,12 @@
             padding: 17px 20px;
             margin-bottom: 22px;
             background-color: white;
-            border: 1px solid #e8e6f0;
+            border: 1px solid #ddebe2;
             border-radius: 10px;
         }
 
         .results-count {
-            color: #666477;
+            color: #596a61;
             font-size: 14px;
         }
 
@@ -166,7 +166,7 @@
 
         .sort-control select {
             padding: 9px;
-            border: 1px solid #d8d6e2;
+            border: 1px solid #ccdbd1;
             border-radius: 6px;
             background-color: white;
         }
@@ -181,7 +181,7 @@
 
         .product-card {
             background-color: white;
-            border: 1px solid #e8e6f0;
+            border: 1px solid #ddebe2;
             border-radius: 10px;
             overflow: hidden;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -194,7 +194,7 @@
 
         .product-image {
             height: 185px;
-            background-color: #eeedf5;
+            background-color: #e5f1e9;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -209,8 +209,8 @@
             display: inline-block;
             padding: 5px 8px;
             margin-bottom: 10px;
-            background-color: #f0ebff;
-            color: #6d28d9;
+            background-color: #cdf8db;
+            color: #18894d;
             border-radius: 4px;
             font-size: 11px;
         }
@@ -246,7 +246,7 @@
 
         .product-button {
             display: block;
-            background-color: #6d28d9;
+            background-color: #18894d;
             color: white;
             text-align: center;
             padding: 11px;
@@ -255,14 +255,14 @@
         }
 
         .product-button:hover {
-            background-color: #5420ad;
+            background-color: #146c3d;
         }
 
         /* BÚSQUEDA SIN RESULTADOS */
 
         .empty-state {
             background-color: white;
-            border: 1px solid #e8e6f0;
+            border: 1px solid #ddebe2;
             border-radius: 12px;
             padding: 55px 20px;
             text-align: center;
@@ -279,7 +279,7 @@
         }
 
         .empty-state p {
-            color: #77758a;
+            color: #697c71;
             line-height: 1.6;
             margin-bottom: 22px;
         }
@@ -287,7 +287,7 @@
         .back-button {
             display: inline-block;
             padding: 12px 20px;
-            background-color: #6d28d9;
+            background-color: #18894d;
             color: white;
             border-radius: 6px;
         }
@@ -311,7 +311,7 @@
 
         .suggestion-list a {
             background-color: white;
-            border: 1px solid #e8e6f0;
+            border: 1px solid #ddebe2;
             border-radius: 20px;
             padding: 11px 17px;
             font-size: 14px;
@@ -319,15 +319,15 @@
         }
 
         .suggestion-list a:hover {
-            background-color: #ede9fe;
-            color: #6d28d9;
+            background-color: #c6f7d7;
+            color: #18894d;
         }
 
         /* PIE DE PÁGINA */
 
         footer {
-            background-color: #17152b;
-            color: #c9c5df;
+            background-color: #13271d;
+            color: #abd1bc;
             text-align: center;
             padding: 28px 15px;
             font-size: 13px;

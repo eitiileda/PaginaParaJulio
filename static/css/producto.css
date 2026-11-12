@@ -6,8 +6,8 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #f3f4f8;
-            color: #20212a;
+            background-color: #eff6f1;
+            color: #27332c;
         }
 
         a {
@@ -26,7 +26,7 @@
         /* ENCABEZADO */
 
         header {
-            background-color: #17152b;
+            background-color: #13271d;
             color: white;
             padding: 18px 6%;
         }
@@ -42,7 +42,7 @@
         .logo {
             font-size: 27px;
             font-weight: bold;
-            color: #a78bfa;
+            color: #1ab462;
             white-space: nowrap;
         }
 
@@ -69,7 +69,7 @@
             padding: 12px 18px;
             border: none;
             border-radius: 0 6px 6px 0;
-            background-color: #8b5cf6;
+            background-color: #148d4d;
             color: white;
         }
 
@@ -81,13 +81,13 @@
         }
 
         .header-links a:hover {
-            color: #c4b5fd;
+            color: #1fdb5e;
         }
 
         /* NAVEGACIÓN */
 
         nav {
-            background-color: #24213e;
+            background-color: #1f3a2b;
             padding: 13px 6%;
         }
 
@@ -99,12 +99,12 @@
         }
 
         nav a {
-            color: #e6e3f5;
+            color: #ccedd7;
             font-size: 14px;
         }
 
         nav a:hover {
-            color: #a78bfa;
+            color: #1ab462;
         }
 
         /* CONTENIDO */
@@ -117,12 +117,12 @@
 
         .breadcrumb {
             font-size: 14px;
-            color: #77758a;
+            color: #697c71;
             margin-bottom: 22px;
         }
 
         .breadcrumb a:hover {
-            color: #6d28d9;
+            color: #18894d;
         }
 
         /* FICHA DEL PRODUCTO */
@@ -139,7 +139,7 @@
         .seller-card,
         .details-card {
             background-color: white;
-            border: 1px solid #e8e6f0;
+            border: 1px solid #ddebe2;
             border-radius: 12px;
         }
 
@@ -152,7 +152,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #f5f3fb;
+            background-color: #e9f8ee;
             border-radius: 10px;
             font-size: 140px;
             margin-bottom: 20px;
@@ -171,13 +171,13 @@
             align-items: center;
             justify-content: center;
             font-size: 32px;
-            border: 1px solid #dedbe9;
+            border: 1px solid #cfe1d5;
             border-radius: 8px;
-            background-color: #f5f3fb;
+            background-color: #e9f8ee;
         }
 
         .thumbnail.selected {
-            border: 2px solid #8b5cf6;
+            border: 2px solid #148d4d;
         }
 
         .product-summary {
@@ -187,8 +187,8 @@
         .condition {
             display: inline-block;
             padding: 6px 10px;
-            background-color: #f0ebff;
-            color: #6d28d9;
+            background-color: #cdf8db;
+            color: #18894d;
             border-radius: 5px;
             font-size: 12px;
             margin-bottom: 12px;
@@ -201,7 +201,7 @@
         }
 
         .product-meta {
-            color: #77758a;
+            color: #697c71;
             font-size: 13px;
         }
 
@@ -218,7 +218,7 @@
         }
 
         .old-price {
-            color: #858397;
+            color: #748a7e;
             text-decoration: line-through;
             font-size: 15px;
             margin-bottom: 5px;
@@ -252,7 +252,7 @@
         .quantity {
             width: 100%;
             padding: 11px;
-            border: 1px solid #d8d6e2;
+            border: 1px solid #ccdbd1;
             border-radius: 6px;
             margin-bottom: 18px;
             background-color: white;
@@ -269,22 +269,22 @@
         }
 
         .buy-button {
-            background-color: #6d28d9;
+            background-color: #18894d;
             color: white;
         }
 
         .buy-button:hover {
-            background-color: #5420ad;
+            background-color: #146c3d;
         }
 
         .cart-button {
-            background-color: #ede9fe;
-            color: #5425a8;
+            background-color: #c6f7d7;
+            color: #186d40;
             margin-bottom: 18px;
         }
 
         .cart-button:hover {
-            background-color: #ddd6fe;
+            background-color: #8fefaf;
         }
 
         .benefit {
@@ -294,7 +294,7 @@
             margin-top: 17px;
             font-size: 13px;
             line-height: 1.5;
-            color: #555366;
+            color: #62786d;
         }
 
         .benefit-icon {
@@ -303,7 +303,7 @@
 
         .benefit strong {
             display: block;
-            color: #20212a;
+            color: #27332c;
             margin-bottom: 3px;
         }
 
@@ -332,7 +332,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #ede9fe;
+            background-color: #c6f7d7;
             font-size: 24px;
         }
 
@@ -343,11 +343,11 @@
 
         .seller-rating {
             font-size: 12px;
-            color: #77758a;
+            color: #697c71;
         }
 
         .seller-description {
-            color: #666477;
+            color: #596a61;
             font-size: 13px;
             line-height: 1.7;
         }
@@ -365,7 +365,7 @@
         }
 
         .details-card p {
-            color: #555366;
+            color: #62786d;
             line-height: 1.8;
             margin-bottom: 20px;
         }
@@ -377,21 +377,21 @@
 
         .specifications td {
             padding: 14px 12px;
-            border-bottom: 1px solid #eeedf3;
+            border-bottom: 1px solid #e8f0eb;
             font-size: 14px;
         }
 
         .specifications td:first-child {
             width: 40%;
-            color: #77758a;
+            color: #697c71;
         }
 
         /* MENSAJES */
 
         .notice {
             display: none;
-            background-color: #ede9fe;
-            color: #5425a8;
+            background-color: #c6f7d7;
+            color: #186d40;
             border-radius: 8px;
             padding: 13px;
             margin-bottom: 15px;
@@ -406,8 +406,8 @@
         /* PIE DE PÁGINA */
 
         footer {
-            background-color: #17152b;
-            color: #c9c5df;
+            background-color: #13271d;
+            color: #abd1bc;
             text-align: center;
             padding: 28px 15px;
             font-size: 13px;

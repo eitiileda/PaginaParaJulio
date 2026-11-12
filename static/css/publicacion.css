@@ -5,13 +5,13 @@
         }
 
         :root {
-            --fondo: #f4f3f9;
+            --fondo: #edf6f0;
             --blanco: #ffffff;
-            --principal: #6c35d9;
-            --principal-oscuro: #4b20a8;
-            --texto: #252238;
-            --gris: #77758a;
-            --borde: #e6e2ef;
+            --principal: #1b8d50;
+            --principal-oscuro: #14673b;
+            --texto: #23392d;
+            --gris: #697c71;
+            --borde: #d6e8dc;
             --verde: #16834a;
             --rojo: #d83b50;
         }
@@ -39,7 +39,7 @@
         /* ENCABEZADO */
 
         .encabezado {
-            background: #211638;
+            background: #122f20;
             color: white;
             padding: 18px 6%;
         }
@@ -59,7 +59,7 @@
         }
 
         .logo span {
-            color: #b99aff;
+            color: #1cc46a;
         }
 
         .buscador {
@@ -93,7 +93,7 @@
         }
 
         .navegacion a:hover {
-            color: #c8b4ff;
+            color: #1fdc5e;
         }
 
         /* CONTENIDO */
@@ -174,7 +174,7 @@
         .grupo textarea {
             width: 100%;
             padding: 12px 13px;
-            border: 1px solid #d8d4e3;
+            border: 1px solid #c7dbce;
             border-radius: 8px;
             background: white;
             color: var(--texto);
@@ -185,7 +185,7 @@
         .grupo select:focus,
         .grupo textarea:focus {
             border-color: var(--principal);
-            box-shadow: 0 0 0 3px #6c35d91a;
+            box-shadow: 0 0 0 3px #1b8d501a;
         }
 
         .grupo textarea {
@@ -208,11 +208,11 @@
         /* IMAGEN */
 
         .zona-imagen {
-            border: 2px dashed #c9bedf;
+            border: 2px dashed #9cceb3;
             border-radius: 10px;
             padding: 25px;
             text-align: center;
-            background: #faf8ff;
+            background: #eefdf3;
         }
 
         .zona-imagen .icono {
@@ -299,7 +299,7 @@
 
         .imagen-previa {
             height: 220px;
-            background: #eee7ff;
+            background: #c3f6d4;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -320,7 +320,7 @@
 
         .etiqueta-previa {
             display: inline-block;
-            background: #eee5ff;
+            background: #bff6d1;
             color: var(--principal-oscuro);
             padding: 5px 9px;
             border-radius: 5px;
@@ -355,8 +355,8 @@
         }
 
         .nota {
-            background: #f4efff;
-            color: #56349a;
+            background: #d8f9e3;
+            color: #267249;
             border-radius: 9px;
             padding: 14px;
             font-size: 13px;
@@ -386,8 +386,8 @@
         /* PIE */
 
         footer {
-            background: #211638;
-            color: #ddd5ef;
+            background: #122f20;
+            color: #b6e3c5;
             text-align: center;
             padding: 28px 20px;
             font-size: 13px;

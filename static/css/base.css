@@ -1,10 +1,10 @@
 /* Estilos compartidos para las próximas pantallas y módulos */
 :root {
-    --color-fondo: #f3f4f8;
-    --color-texto: #20212a;
+    --color-fondo: #eff6f1;
+    --color-texto: #27332c;
     --color-principal: #003315;
     --color-encabezado: #036516;
-    --color-borde: #e8e6f0;
+    --color-borde: #ddebe2;
     --radio: 10px;
     --sombra-tarjeta: 0 3px 12px #0000000d;
 }
@@ -36,4 +36,4 @@ img { max-width: 100%; height: auto; }
     background: var(--color-principal);
     color: #fff;
 }
-:focus-visible { outline: 3px solid #a78bfa; outline-offset: 2px; }
+:focus-visible { outline: 3px solid #1ab462; outline-offset: 2px; }

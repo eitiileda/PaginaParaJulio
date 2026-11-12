@@ -28,6 +28,10 @@ PAGINAS = {
     "mas_opciones.html": "mas_opciones.html",
     "ofertas.html": "ofertas.html",
     "chats.html": "chats.html",
+    "cuenta_ingresar.html": "cuenta_ingresar.html",
+    "cuenta_registro.html": "cuenta_registro.html",
+    "cuenta_perfil.html": "cuenta_perfil.html",
+    
 }
 
 CATEGORIAS = {
