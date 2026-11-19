@@ -32,9 +32,7 @@ const formulario = document.getElementById("formulario-publicacion");
         function formatoPrecio(valor) {
             const numero = Number(valor) || 0;
 
-            return numero.toLocaleString("es-AR", {
-                style: "currency",
-                currency: "ARS",
+            return "🪙 " + numero.toLocaleString("es-AR", {
                 maximumFractionDigits: 0
             });
         }

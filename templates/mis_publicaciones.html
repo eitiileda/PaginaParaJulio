@@ -23,7 +23,7 @@
             <div class="listing-info">
                 <span class="listing-status status-{{ publicacion.estado }}">{{ publicacion.estado }}</span>
                 <h2>{{ publicacion.producto.nombre }}</h2>
-                <p>${{ "%.2f"|format(publicacion.precio) }} · {{ publicacion.stock }} unidades</p>
+                <p>🪙 {{ publicacion.precio|monedas }} · {{ publicacion.stock }} unidades</p>
                 <p>{{ publicacion.producto.categoria }} · {{ publicacion.condicion or "Sin condición" }}</p>
             </div>
             <div class="listing-actions">

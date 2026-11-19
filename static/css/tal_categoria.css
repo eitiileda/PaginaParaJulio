@@ -311,3 +311,38 @@
 
 /* Estilos inline movidos a clases */
 .moved-inline-style-1 { margin-top: 8px; }
+
+        /* --- Resultados reales (imagen subida, orden y paginación) --- */
+        .imagen-producto {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .imagen-producto img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .form-orden {
+            margin: 0;
+        }
+
+        .paginacion {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin: 32px 0;
+            font-size: 14px;
+        }
+
+        .paginacion a {
+            background: #1b8d50;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+        }

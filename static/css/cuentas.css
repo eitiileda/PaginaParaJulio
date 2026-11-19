@@ -137,3 +137,7 @@ h1 { margin: 0 0 .5rem; }
     .management-page { padding: 1.25rem; }
     .listing-card { flex-direction: column; }
 }
+
+.account-notice { margin: 1rem 0; padding: .75rem 1rem; border-radius: 6px; background: #e5e7eb; font-weight: 700; }
+.account-notice.success { background: #dcfce7; color: #166534; }
+.account-notice.error { background: #fee2e2; color: #991b1b; }

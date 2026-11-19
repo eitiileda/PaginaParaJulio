@@ -25,6 +25,7 @@
                     type="search"
                     name="q"
                     id="search-input"
+                    value="{{ consulta }}"
                     placeholder="Buscar videojuegos, consolas y accesorios..."
                     aria-label="Buscar productos"
                     required
@@ -59,39 +60,98 @@
         </div>
 
         <h1 class="page-title" id="page-title">
-            Resultados de búsqueda
+            {% if consulta %}Resultados para "{{ consulta }}"{% else %}Todos los productos{% endif %}
         </h1>
 
         <p class="page-description" id="page-description">
-            Encontrá los productos gamer que estás buscando.
+            {% if consulta %}
+                Estos son los productos que coinciden con tu búsqueda.
+            {% else %}
+                Explorá nuestro catálogo de productos gamer.
+            {% endif %}
         </p>
 
         <!-- BARRA DE RESULTADOS -->
         <section class="results-toolbar">
 
             <p class="results-count" id="results-count">
-                Preparando resultados...
+                {{ total }} {{ "producto encontrado" if total == 1 else "productos encontrados" }}
             </p>
 
-            <label class="sort-control">
-                Ordenar por:
+            <form class="sort-form" method="get" action="{{ url_for('busqueda') }}">
+                {% if consulta %}<input type="hidden" name="q" value="{{ consulta }}">{% endif %}
+                <label class="sort-control">
+                    Ordenar por:
 
-                <select id="sort-select">
-                    <option value="relevancia">Relevancia</option>
-                    <option value="menor">Menor precio</option>
-                    <option value="mayor">Mayor precio</option>
-                    <option value="nombre">Nombre</option>
-                </select>
-            </label>
+                    <select id="sort-select" name="orden" onchange="this.form.submit()">
+                        <option value="relevancia" {{ "selected" if orden == "relevancia" }}>Relevancia</option>
+                        <option value="menor" {{ "selected" if orden == "menor" }}>Menor precio</option>
+                        <option value="mayor" {{ "selected" if orden == "mayor" }}>Mayor precio</option>
+                        <option value="nombre" {{ "selected" if orden == "nombre" }}>Nombre</option>
+                    </select>
+                </label>
+                <noscript><button type="submit">Ordenar</button></noscript>
+            </form>
 
         </section>
 
         <!-- RESULTADOS -->
         <section class="products-grid" id="products-grid">
+            {% for pub in publicaciones %}
+            {% set logo = pub.producto.logo %}
+            <article class="product-card">
+                <div class="product-image" aria-hidden="true">
+                    🎮
+                    {% if logo and (logo.startswith("/") or logo.startswith("http")) %}
+                    <img src="{{ logo }}" alt="" loading="lazy" onerror="this.remove()">
+                    {% endif %}
+                </div>
 
-            <!-- Los resultados se generan con JavaScript -->
+                <div class="product-info">
+                    <span class="condition">{{ pub.condicion or "Sin especificar" }}</span>
 
+                    <h2>{{ pub.producto.nombre }}</h2>
+
+                    <p class="price">🪙 {{ pub.precio|monedas }}</p>
+
+                    <p class="installments">Vendedor: {{ pub.vendedor.nombre }}</p>
+
+                    <p class="availability">Disponible</p>
+
+                    <a href="{{ url_for('detalle_publicacion', id_publicacion=pub.id_publicacion) }}" class="product-button">
+                        Ver producto
+                    </a>
+                </div>
+            </article>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">🔎</div>
+
+                <h2>No encontramos resultados</h2>
+
+                <p>
+                    Probá con otras palabras o explorá
+                    nuestras categorías para descubrir productos.
+                </p>
+
+                <a href="{{ url_for('categorias') }}" class="back-button">
+                    Ver categorías
+                </a>
+            </div>
+            {% endfor %}
         </section>
+
+        {% if total_paginas > 1 %}
+        <nav class="pagination" aria-label="Paginación de resultados">
+            {% if pagina > 1 %}
+            <a href="{{ url_for('busqueda', q=consulta or None, orden=orden if orden != 'relevancia' else None, pagina=pagina - 1) }}">← Anterior</a>
+            {% endif %}
+            <span>Página {{ pagina }} de {{ total_paginas }}</span>
+            {% if pagina < total_paginas %}
+            <a href="{{ url_for('busqueda', q=consulta or None, orden=orden if orden != 'relevancia' else None, pagina=pagina + 1) }}">Siguiente →</a>
+            {% endif %}
+        </nav>
+        {% endif %}
 
         <!-- SUGERENCIAS -->
         <section class="suggestions">
@@ -135,8 +195,6 @@
         <p>© 2026 GameMarket. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- LÓGICA DE BÚSQUEDA -->
-    <script src="{{ url_for('static', filename='js/busqueda.js') }}" defer></script>
 
 </body>
 </html>

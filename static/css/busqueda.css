@@ -419,3 +419,38 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* --- Resultados reales (imagen subida, orden y paginación) --- */
+        .product-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sort-form {
+            margin: 0;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin: 32px 0;
+            font-size: 14px;
+        }
+
+        .pagination a {
+            background-color: #18894d;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+        }

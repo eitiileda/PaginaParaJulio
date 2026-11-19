@@ -1,7 +1,10 @@
 """Rutas web. Cada página queda separada para poder añadir módulos gradualmente."""
+import math
 import os
 import re
+import unicodedata
 import uuid
+from datetime import datetime
 from decimal import Decimal, InvalidOperation
 from urllib.parse import urlsplit
 
@@ -11,6 +14,7 @@ from flask import (
 )
 from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from sqlalchemy.orm import joinedload
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from .extensions import db
@@ -20,9 +24,6 @@ from .models import Usuario, Producto, Publicacion, Compra
 # "publicacion.html" ya NO está acá: tiene su propia ruta más abajo,
 # porque necesita cargar la lista de vendedores desde la base de datos.
 PAGINAS = {
-    "busqueda.html": "busqueda.html",
-    "categorias.html": "categorias.html",
-    "tal_categoria.html": "tal_categoria.html",
     "producto.html": "producto.html",
     "historial.html": "historial.html",
     "mas_opciones.html": "mas_opciones.html",
@@ -38,6 +39,26 @@ CATEGORIAS = {
     "consolas", "videojuegos", "perifericos", "componentes",
     "pc", "accesorios", "audio",
 }
+NOMBRES_CATEGORIAS = {
+    "consolas": "Consolas",
+    "videojuegos": "Videojuegos",
+    "perifericos": "Periféricos gamer",
+    "componentes": "Componentes de PC",
+    "pc": "PC Gamer",
+    "audio": "Audio gamer",
+    "accesorios": "Accesorios",
+}
+DESCRIPCIONES_CATEGORIAS = {
+    "consolas": "Descubrí consolas y controles para disfrutar tus juegos favoritos.",
+    "videojuegos": "Encontrá videojuegos de distintos géneros para ampliar tu colección.",
+    "perifericos": "Mejorá tu experiencia con teclados, mouse y monitores gamer.",
+    "componentes": "Explorá componentes para armar o actualizar tu computadora.",
+    "pc": "Descubrí computadoras gamer para jugar y crear contenido.",
+    "audio": "Encontrá auriculares y micrófonos para jugar y hacer streaming.",
+    "accesorios": "Completá tu equipo con cables y accesorios para gaming.",
+}
+ORDENES = {"relevancia", "menor", "mayor", "nombre"}
+POR_PAGINA = 24
 CONDICIONES = {"Nuevo", "Usado", "Reacondicionado"}
 PRECIO_MAX = Decimal("99999999.99")  # límite de DECIMAL(10,2)
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
@@ -75,6 +96,114 @@ def _redirigir_local_si_corresponde(destino):
     return redirect(url_for("perfil"))
 
 
+def _formatear_monedas(valor):
+    """Formatea un importe en monedas: 20.000 o 2.500,50."""
+    try:
+        numero = Decimal(str(valor))
+    except (InvalidOperation, TypeError, ValueError):
+        return "0"
+    texto = f"{numero:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
+    return texto[:-3] if texto.endswith(",00") else texto
+
+
+def _resumen_monedas(usuario):
+    """Devuelve (gastado, ganado) calculados desde las compras registradas."""
+    cero = Decimal("0.00")
+    try:
+        gastado = (
+            db.session.query(db.func.sum(Compra.monto_total))
+            .filter(Compra.id_comprador == usuario.id_usuario)
+            .scalar()
+        )
+        ganado = (
+            db.session.query(db.func.sum(Compra.monto_total))
+            .join(Publicacion, Compra.id_publicacion == Publicacion.id_publicacion)
+            .filter(Publicacion.id_usuario == usuario.id_usuario)
+            .scalar()
+        )
+    except SQLAlchemyError:
+        db.session.rollback()
+        current_app.logger.exception("Error al calcular las monedas del usuario.")
+        return cero, cero
+    return (
+        Decimal(str(gastado)) if gastado is not None else cero,
+        Decimal(str(ganado)) if ganado is not None else cero,
+    )
+
+
+def _normalizar(texto):
+    """Minúsculas y sin tildes, para buscar sin importar acentos."""
+    texto = unicodedata.normalize("NFD", (texto or "").lower())
+    return "".join(c for c in texto if not unicodedata.combining(c)).strip()
+
+
+def _publicaciones_visibles():
+    """Publicaciones que se pueden comprar: activas y con stock."""
+    return (
+        Publicacion.query
+        .options(joinedload(Publicacion.producto), joinedload(Publicacion.vendedor))
+        .filter(Publicacion.estado == "activo", Publicacion.stock > 0)
+    )
+
+
+def _buscar(publicaciones, consulta):
+    """Filtra por todas las palabras de la consulta. Devuelve (lista, puntajes)."""
+    palabras = _normalizar(consulta).split()
+    if not palabras:
+        return list(publicaciones), {}
+    encontradas, puntajes = [], {}
+    for pub in publicaciones:
+        producto = pub.producto
+        nombre = _normalizar(producto.nombre)
+        categoria = _normalizar(
+            f"{producto.categoria or ''} "
+            f"{NOMBRES_CATEGORIAS.get(producto.categoria, '')}"
+        )
+        detalle = _normalizar(
+            f"{producto.descripcion or ''} {pub.descripcion_vendedor or ''}"
+        )
+        puntaje = 0
+        for palabra in palabras:
+            if palabra in nombre:
+                puntaje += 3
+            elif palabra in categoria:
+                puntaje += 2
+            elif palabra in detalle:
+                puntaje += 1
+            else:
+                puntaje = None
+                break
+        if puntaje is not None:
+            encontradas.append(pub)
+            puntajes[pub.id_publicacion] = puntaje
+    return encontradas, puntajes
+
+
+def _ordenar_publicaciones(publicaciones, orden, puntajes=None):
+    # Base: las más nuevas primero (los demás criterios desempatan con esto).
+    lista = sorted(
+        publicaciones,
+        key=lambda p: p.fecha or datetime.min,
+        reverse=True,
+    )
+    if orden == "menor":
+        lista.sort(key=lambda p: p.precio)
+    elif orden == "mayor":
+        lista.sort(key=lambda p: p.precio, reverse=True)
+    elif orden == "nombre":
+        lista.sort(key=lambda p: _normalizar(p.producto.nombre))
+    elif puntajes:
+        lista.sort(key=lambda p: puntajes.get(p.id_publicacion, 0), reverse=True)
+    return lista
+
+
+def _paginar(lista, pagina):
+    total_paginas = max(1, math.ceil(len(lista) / POR_PAGINA))
+    pagina = min(max(pagina, 1), total_paginas)
+    inicio = (pagina - 1) * POR_PAGINA
+    return lista[inicio:inicio + POR_PAGINA], pagina, total_paginas
+
+
 def _limpiar_sesion_manteniendo_carrito():
     carrito = session.get("carrito", {})
     session.clear()
@@ -99,6 +228,8 @@ def _leer_carrito():
 
 
 def registrar_rutas(app):
+    app.add_template_filter(_formatear_monedas, "monedas")
+
     @app.errorhandler(413)
     def archivo_muy_grande(_error_413):
         if request.path.startswith("/api/"):
@@ -121,6 +252,87 @@ def registrar_rutas(app):
             current_app.logger.exception("Error al listar publicaciones.")
             publicaciones = []
         return render_template("index.html", publicaciones=publicaciones)
+
+    @app.get("/busqueda.html")
+    def busqueda():
+        consulta = request.args.get("q", "").strip()[:100]
+        orden = request.args.get("orden", "relevancia")
+        if orden not in ORDENES:
+            orden = "relevancia"
+        try:
+            visibles = _publicaciones_visibles().all()
+        except SQLAlchemyError:
+            db.session.rollback()
+            current_app.logger.exception("Error al buscar publicaciones.")
+            visibles = []
+        encontradas, puntajes = _buscar(visibles, consulta)
+        ordenadas = _ordenar_publicaciones(encontradas, orden, puntajes)
+        pagina_actual, pagina, total_paginas = _paginar(
+            ordenadas, request.args.get("pagina", 1, type=int)
+        )
+        return render_template(
+            "busqueda.html",
+            consulta=consulta,
+            orden=orden,
+            publicaciones=pagina_actual,
+            total=len(ordenadas),
+            pagina=pagina,
+            total_paginas=total_paginas,
+        )
+
+    @app.get("/categorias.html")
+    def categorias():
+        try:
+            filas = (
+                db.session.query(Producto.categoria, db.func.count(Publicacion.id_publicacion))
+                .join(Publicacion, Publicacion.id_producto == Producto.id_producto)
+                .filter(Publicacion.estado == "activo", Publicacion.stock > 0)
+                .group_by(Producto.categoria)
+                .all()
+            )
+        except SQLAlchemyError:
+            db.session.rollback()
+            current_app.logger.exception("Error al contar publicaciones por categoría.")
+            filas = []
+        conteos = {categoria: total for categoria, total in filas if categoria}
+        return render_template("categorias.html", conteos=conteos)
+
+    @app.get("/tal_categoria.html")
+    def tal_categoria():
+        slug = _normalizar(
+            request.args.get("categoria") or request.args.get("q") or ""
+        )
+        if slug not in CATEGORIAS:
+            slug = "consolas"
+        orden = request.args.get("orden", "relevancia")
+        if orden not in ORDENES:
+            orden = "relevancia"
+        try:
+            visibles = (
+                _publicaciones_visibles()
+                .filter(Publicacion.producto.has(Producto.categoria == slug))
+                .all()
+            )
+        except SQLAlchemyError:
+            db.session.rollback()
+            current_app.logger.exception("Error al listar la categoría %s.", slug)
+            visibles = []
+        ordenadas = _ordenar_publicaciones(visibles, orden)
+        pagina_actual, pagina, total_paginas = _paginar(
+            ordenadas, request.args.get("pagina", 1, type=int)
+        )
+        return render_template(
+            "tal_categoria.html",
+            slug=slug,
+            nombre=NOMBRES_CATEGORIAS[slug],
+            descripcion=DESCRIPCIONES_CATEGORIAS[slug],
+            nombres_categorias=NOMBRES_CATEGORIAS,
+            orden=orden,
+            publicaciones=pagina_actual,
+            total=len(ordenadas),
+            pagina=pagina,
+            total_paginas=total_paginas,
+        )
 
     @app.route("/cuenta/registro", methods=["GET", "POST"])
     def registro():
@@ -229,7 +441,41 @@ def registrar_rutas(app):
     @app.get("/cuenta/perfil")
     @login_required
     def perfil():
-        return render_template("cuenta_perfil.html", usuario=current_user)
+        gastado, ganado = _resumen_monedas(current_user)
+        return render_template(
+            "cuenta_perfil.html",
+            usuario=current_user,
+            gastado=gastado,
+            ganado=ganado,
+        )
+
+    @app.get("/cuenta/compras")
+    @login_required
+    def mis_compras():
+        orden = (Compra.fecha.desc(), Compra.id_compra.desc())
+        compras = (
+            Compra.query
+            .filter_by(id_comprador=current_user.id_usuario)
+            .order_by(*orden)
+            .all()
+        )
+        ventas = []
+        if current_user.vendedor:
+            ventas = (
+                Compra.query
+                .join(Publicacion, Compra.id_publicacion == Publicacion.id_publicacion)
+                .filter(Publicacion.id_usuario == current_user.id_usuario)
+                .order_by(*orden)
+                .all()
+            )
+        gastado, ganado = _resumen_monedas(current_user)
+        return render_template(
+            "mis_compras.html",
+            compras=compras,
+            ventas=ventas,
+            gastado=gastado,
+            ganado=ganado,
+        )
 
     @app.get("/carrito.html")
     def carrito():
@@ -280,6 +526,12 @@ def registrar_rutas(app):
         publicacion = db.session.get(Publicacion, id_publicacion)
         if publicacion is None:
             abort(404)
+        if (
+            current_user.is_authenticated
+            and publicacion.id_usuario == current_user.id_usuario
+        ):
+            flash("No podés agregar al carrito tu propia publicación.", "error")
+            return redirect(url_for("detalle_publicacion", id_publicacion=id_publicacion))
         if publicacion.estado != "activo" or publicacion.stock < 1:
             flash("Este producto no está disponible para agregar al carrito.", "error")
             return redirect(url_for("detalle_publicacion", id_publicacion=id_publicacion))
@@ -360,6 +612,7 @@ def registrar_rutas(app):
                 raise ValueError("Hay un producto del carrito que ya no existe.")
 
             compras = []
+            total_pagado = Decimal("0.00")
             for id_publicacion, cantidad in items.items():
                 publicacion = por_id[id_publicacion]
                 if publicacion.estado != "activo" or publicacion.stock < cantidad:
@@ -374,8 +627,10 @@ def registrar_rutas(app):
                     id_comprador=current_user.id_usuario,
                     cantidad=cantidad,
                     monto_total=publicacion.precio * cantidad,
+                    referencia_pago="monedas",
                 )
                 compras.append(compra)
+                total_pagado += compra.monto_total
                 publicacion.stock -= cantidad
 
             db.session.add_all(compras)
@@ -392,10 +647,10 @@ def registrar_rutas(app):
 
         session.pop("carrito", None)
         flash(
-            "Compra registrada. Esta versión no procesa pagos; no se realizó ningún cobro.",
+            f"¡Compra realizada! Pagaste {_formatear_monedas(total_pagado)} monedas.",
             "success",
         )
-        return redirect(url_for("carrito"))
+        return redirect(url_for("mis_compras"))
 
     @app.post("/cuenta/habilitar-ventas")
     @login_required

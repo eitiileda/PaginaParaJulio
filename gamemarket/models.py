@@ -64,3 +64,6 @@ class Compra(db.Model):
     # No guardar números de tarjeta: integrar una pasarela de pago cuando corresponda.
     referencia_pago = db.Column(db.String(255))
     fecha = db.Column(db.DateTime, server_default=db.func.current_timestamp())
+
+    publicacion = db.relationship("Publicacion")
+    comprador = db.relationship("Usuario")

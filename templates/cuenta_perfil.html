@@ -14,8 +14,12 @@
         <dl class="profile-details">
             <div><dt>Correo electrónico</dt><dd>{{ usuario.email }}</dd></div>
             <div><dt>Cuenta</dt><dd>{{ "Vendedor" if usuario.vendedor else "Comprador" }}</dd></div>
+            <div><dt>Monedas gastadas</dt><dd>🪙 {{ gastado|monedas }}</dd></div>
+            {% if usuario.vendedor %}<div><dt>Monedas ganadas por ventas</dt><dd>🪙 {{ ganado|monedas }}</dd></div>{% endif %}
             <div><dt>Miembro desde</dt><dd>{{ usuario.fecha_registro.strftime("%d/%m/%Y") if usuario.fecha_registro else "—" }}</dd></div>
         </dl>
+        <p>Comprás con monedas y tu saldo es ilimitado.</p>
+        <a class="button" href="{{ url_for('mis_compras') }}">Mis compras</a>
         {% if not usuario.vendedor %}
         <form action="{{ url_for('habilitar_ventas') }}" method="post">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis compras | GameMarket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cuentas.css') }}">
+</head>
+<body>
+    <main class="management-page">
+        <a class="account-brand" href="{{ url_for('index') }}">Game<span>Market</span></a>
+        <p class="eyebrow">Mis monedas</p>
+        <h1>Mis compras</h1>
+
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensaje in mensajes %}
+            <p class="account-notice {{ categoria }}" role="status">{{ mensaje }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <dl class="profile-details">
+            <div><dt>Monedas gastadas</dt><dd>🪙 {{ gastado|monedas }}</dd></div>
+            {% if current_user.vendedor %}
+            <div><dt>Monedas ganadas por ventas</dt><dd>🪙 {{ ganado|monedas }}</dd></div>
+            {% endif %}
+        </dl>
+        <p>Tu saldo de monedas es ilimitado: podés comprar sin límite.</p>
+
+        <div class="management-actions">
+            <a class="button" href="{{ url_for('index') }}">Seguir comprando</a>
+            <a href="{{ url_for('perfil') }}">Volver a mi cuenta</a>
+        </div>
+
+        <h2>Compras realizadas</h2>
+        {% for compra in compras %}
+        <article class="listing-card">
+            <div class="listing-info">
+                <h2>
+                    <a href="{{ url_for('detalle_publicacion', id_publicacion=compra.id_publicacion) }}">{{ compra.publicacion.producto.nombre }}</a>
+                </h2>
+                <p>{{ compra.cantidad }} {{ "unidad" if compra.cantidad == 1 else "unidades" }} · 🪙 {{ compra.monto_total|monedas }}</p>
+                <p>Vendedor: {{ compra.publicacion.vendedor.nombre }}{% if compra.fecha %} · {{ compra.fecha.strftime("%d/%m/%Y %H:%M") }}{% endif %}</p>
+            </div>
+        </article>
+        {% else %}
+        <p>Todavía no hiciste ninguna compra.</p>
+        {% endfor %}
+
+        {% if current_user.vendedor %}
+        <h2>Mis ventas</h2>
+        {% for venta in ventas %}
+        <article class="listing-card">
+            <div class="listing-info">
+                <h2>{{ venta.publicacion.producto.nombre }}</h2>
+                <p>{{ venta.cantidad }} {{ "unidad" if venta.cantidad == 1 else "unidades" }} · 🪙 {{ venta.monto_total|monedas }}</p>
+                <p>Comprador: {{ venta.comprador.nombre }}{% if venta.fecha %} · {{ venta.fecha.strftime("%d/%m/%Y %H:%M") }}{% endif %}</p>
+            </div>
+        </article>
+        {% else %}
+        <p>Todavía no vendiste ningún producto.</p>
+        {% endfor %}
+        {% endif %}
+    </main>
+</body>
+</html>

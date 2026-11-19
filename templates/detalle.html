@@ -43,6 +43,7 @@
         {% set entero = p.precio | int %}
         {% set centavos = ((p.precio - entero) * 100) | round | int %}
         {% set disponible = p.estado == "activo" and p.stock > 0 %}
+        {% set es_propia = current_user.is_authenticated and p.id_usuario == current_user.id_usuario %}
 
         <div class="migas">
             <a href="{{ url_for('index') }}">Inicio</a> /
@@ -78,7 +79,7 @@
                 </div>
 
                 <p class="precio">
-                    <span class="moneda">$</span>{{ "{:,}".format(entero).replace(",", ".") }}{% if centavos %}<sup>{{ "%02d"|format(centavos) }}</sup>{% endif %}
+                    <span class="moneda">🪙</span>{{ "{:,}".format(entero).replace(",", ".") }}{% if centavos %}<sup>{{ "%02d"|format(centavos) }}</sup>{% endif %}
                 </p>
 
                 {% if p.producto.descripcion %}
@@ -102,7 +103,11 @@
                     <p class="aviso carrito-mensaje {{ categoria_mensaje }}" role="status">{{ mensaje }}</p>
                     {% endfor %}
                 {% endwith %}
-                {% if disponible %}
+                {% if es_propia %}
+                    <p class="stock ok">Esta es tu publicación</p>
+                    <p class="aviso">No podés comprar tus propios productos.</p>
+                    <a class="boton boton-principal" href="{{ url_for('editar_publicacion', id_publicacion=p.id_publicacion) if p.estado != 'finalizado' else url_for('mis_publicaciones') }}">{{ "Editar publicación" if p.estado != "finalizado" else "Mis publicaciones" }}</a>
+                {% elif disponible %}
                     <p class="stock ok">Stock disponible</p>
                     <form action="{{ url_for('agregar_al_carrito', id_publicacion=p.id_publicacion) }}" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

@@ -35,7 +35,7 @@
             <label for="descripcion">Descripción</label>
             <textarea id="descripcion" name="descripcion" maxlength="1500" required>{{ valores.get('descripcion', publicacion.producto.descripcion or '') }}</textarea>
 
-            <label for="precio">Precio (ARS)</label>
+            <label for="precio">Precio (monedas)</label>
             <input id="precio" name="precio" type="number" min="0.01" max="99999999.99" step="0.01" required value="{{ valores.get('precio', publicacion.precio) }}">
 
             <label for="stock">Unidades disponibles</label>

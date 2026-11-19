@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -41,43 +40,85 @@
         <div class="migas">
             <a href="index.html">Inicio</a> /
             <a href="categorias.html">Categorías</a> /
-            <span id="migaCategoria">Productos</span>
+            <span id="migaCategoria">{{ nombre }}</span>
         </div>
 
         <section class="presentacion">
-            <h1 id="tituloCategoria">Explorá nuestros productos</h1>
-            <p id="descripcionCategoria">
-                Encontrá videojuegos, consolas y accesorios para llevar tu
-                experiencia gamer al siguiente nivel.
-            </p>
+            <h1 id="tituloCategoria">{{ nombre }}</h1>
+            <p id="descripcionCategoria">{{ descripcion }}</p>
         </section>
 
         <div class="selector-categorias" id="selectorCategorias">
-            <a href="tal_categoria.html?categoria=consolas">🎮 Consolas</a>
-            <a href="tal_categoria.html?categoria=videojuegos">🕹️ Videojuegos</a>
-            <a href="tal_categoria.html?categoria=perifericos">⌨️ Periféricos</a>
-            <a href="tal_categoria.html?categoria=componentes">⚙️ Componentes</a>
-            <a href="tal_categoria.html?categoria=pc">🖥️ PC Gamer</a>
-            <a href="tal_categoria.html?categoria=audio">🎧 Audio</a>
-            <a href="tal_categoria.html?categoria=accesorios">🔌 Accesorios</a>
+            <a href="tal_categoria.html?categoria=consolas"{% if slug == "consolas" %} class="activa"{% endif %}>🎮 Consolas</a>
+            <a href="tal_categoria.html?categoria=videojuegos"{% if slug == "videojuegos" %} class="activa"{% endif %}>🕹️ Videojuegos</a>
+            <a href="tal_categoria.html?categoria=perifericos"{% if slug == "perifericos" %} class="activa"{% endif %}>⌨️ Periféricos</a>
+            <a href="tal_categoria.html?categoria=componentes"{% if slug == "componentes" %} class="activa"{% endif %}>⚙️ Componentes</a>
+            <a href="tal_categoria.html?categoria=pc"{% if slug == "pc" %} class="activa"{% endif %}>🖥️ PC Gamer</a>
+            <a href="tal_categoria.html?categoria=audio"{% if slug == "audio" %} class="activa"{% endif %}>🎧 Audio</a>
+            <a href="tal_categoria.html?categoria=accesorios"{% if slug == "accesorios" %} class="activa"{% endif %}>🔌 Accesorios</a>
         </div>
 
         <section>
             <div class="barra-productos">
                 <div>
-                    <h2 id="subtituloProductos">Productos disponibles</h2>
-                    <p id="cantidad">Cargando productos...</p>
+                    <h2 id="subtituloProductos">Productos de {{ nombre }}</h2>
+                    <p id="cantidad">{{ total }} {{ "producto encontrado" if total == 1 else "productos encontrados" }}</p>
                 </div>
 
-                <select id="orden" aria-label="Ordenar productos">
-                    <option value="relevancia">Ordenar por relevancia</option>
-                    <option value="menor">Menor precio</option>
-                    <option value="mayor">Mayor precio</option>
-                    <option value="nombre">Nombre A-Z</option>
-                </select>
+                <form method="get" action="{{ url_for('tal_categoria') }}" class="form-orden">
+                    <input type="hidden" name="categoria" value="{{ slug }}">
+                    <select id="orden" name="orden" aria-label="Ordenar productos" onchange="this.form.submit()">
+                        <option value="relevancia" {{ "selected" if orden == "relevancia" }}>Más recientes</option>
+                        <option value="menor" {{ "selected" if orden == "menor" }}>Menor precio</option>
+                        <option value="mayor" {{ "selected" if orden == "mayor" }}>Mayor precio</option>
+                        <option value="nombre" {{ "selected" if orden == "nombre" }}>Nombre A-Z</option>
+                    </select>
+                    <noscript><button type="submit">Ordenar</button></noscript>
+                </form>
             </div>
 
-            <div class="productos" id="listaProductos"></div>
+            <div class="productos" id="listaProductos">
+                {% for pub in publicaciones %}
+                {% set logo = pub.producto.logo %}
+                <article class="producto">
+                    <div class="imagen-producto" aria-hidden="true">
+                        🎮
+                        {% if logo and (logo.startswith("/") or logo.startswith("http")) %}
+                        <img src="{{ logo }}" alt="" loading="lazy" onerror="this.remove()">
+                        {% endif %}
+                    </div>
+
+                    <div class="info-producto">
+                        <span class="estado">{{ pub.condicion or "Sin especificar" }}</span>
+                        <h3 class="nombre">{{ pub.producto.nombre }}</h3>
+                        <p class="precio">🪙 {{ pub.precio|monedas }}</p>
+                        <p class="cuotas">Vendedor: {{ pub.vendedor.nombre }}</p>
+
+                        <a class="ver-producto" href="{{ url_for('detalle_publicacion', id_publicacion=pub.id_publicacion) }}">
+                            Ver producto
+                        </a>
+                    </div>
+                </article>
+                {% else %}
+                <div class="sin-resultados">
+                    <h3>Todavía no hay productos en esta categoría</h3>
+                    <p>¿Tenés algo para vender? Publicalo, o explorá otras categorías.</p>
+                    <a href="categorias.html">Ver todas las categorías</a>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if total_paginas > 1 %}
+            <nav class="paginacion" aria-label="Paginación de productos">
+                {% if pagina > 1 %}
+                <a href="{{ url_for('tal_categoria', categoria=slug, orden=orden if orden != 'relevancia' else None, pagina=pagina - 1) }}">← Anterior</a>
+                {% endif %}
+                <span>Página {{ pagina }} de {{ total_paginas }}</span>
+                {% if pagina < total_paginas %}
+                <a href="{{ url_for('tal_categoria', categoria=slug, orden=orden if orden != 'relevancia' else None, pagina=pagina + 1) }}">Siguiente →</a>
+                {% endif %}
+            </nav>
+            {% endif %}
         </section>
     </main>
 
@@ -86,7 +127,6 @@
         <p class="moved-inline-style-1">Proyecto educativo de comercio electrónico.</p>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/tal_categoria.js') }}" defer></script>
 
 </body>
 </html>

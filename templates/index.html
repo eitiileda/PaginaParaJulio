@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,8 +32,6 @@
             <div class="header-links">
                 <a href="historial.html">Historial</a>
                 <a href="carrito.html">🛒 Carrito</a>
-                <a href="cuenta_ingresar.html">Ingresar</a>
-                <a href="cuenta_registro.html">Crear cuenta</a>         
                 {% if current_user.is_authenticated %}
                     <a href="{{ url_for('perfil') }}">Hola, {{ current_user.nombre }}</a>
                     <form action="{{ url_for('cerrar_sesion') }}" method="post" class="account-logout">
@@ -140,7 +137,7 @@
                         <h3>{{ pub.producto.nombre }}</h3>
                         
                         <!-- Mostramos el precio real de la publicación -->
-                        <p class="price">${{ pub.precio }}</p>
+                        <p class="price">🪙 {{ pub.precio|monedas }}</p>
                         
                         <p class="installments">Stock disponible: {{ pub.stock }}</p>
                         <p class="shipping">Vendedor: {{ pub.vendedor.nombre }}</p>

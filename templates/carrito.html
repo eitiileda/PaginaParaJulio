@@ -39,8 +39,8 @@
                             {% if not disponible %}No disponible o stock insuficiente{% else %}Disponible{% endif %}
                         </span>
                         <a class="sketch-nombre" href="{{ url_for('detalle_publicacion', id_publicacion=publicacion.id_publicacion) }}">{{ publicacion.producto.nombre }}</a>
-                        <span class="sketch-precio">${{ "%.2f"|format(publicacion.precio) }} c/u</span>
-                        <span class="cart-subtotal">Subtotal: ${{ "%.2f"|format(publicacion.precio * linea.cantidad) }}</span>
+                        <span class="sketch-precio">🪙 {{ publicacion.precio|monedas }} c/u</span>
+                        <span class="cart-subtotal">Subtotal: 🪙 {{ (publicacion.precio * linea.cantidad)|monedas }}</span>
                         {% if disponible %}
                         <span class="cart-stock">Stock disponible: {{ publicacion.stock }}</span>
                         {% endif %}
@@ -78,8 +78,8 @@
 
         <section class="cart-section cart-summary">
             <h2 class="section-title-custom">Resumen</h2>
-            <p class="summary-total"><span>Total estimado</span><strong>${{ "%.2f"|format(total) }}</strong></p>
-            <p class="payment-note">Esta versión registra la compra y descuenta stock, pero no procesa pagos ni realiza cobros.</p>
+            <p class="summary-total"><span>Total a pagar</span><strong>🪙 {{ total|monedas }}</strong></p>
+            <p class="payment-note">Pagás con monedas. Tu saldo es ilimitado: no hace falta cargar nada ni se realiza ningún cobro real.</p>
             {% if current_user.is_authenticated %}
             <form method="post" action="{{ url_for('confirmar_compra') }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

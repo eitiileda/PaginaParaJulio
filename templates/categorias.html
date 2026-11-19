@@ -29,9 +29,20 @@
                 <button type="submit">Buscar</button>
             </form>
 
-            <a href="carrito.html" class="enlace-carrito">
-                🛒 Mi carrito
-            </a>
+            <div class="header-links">
+                <a href="historial.html">Historial</a>
+                <a href="carrito.html">🛒 Carrito</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('perfil') }}">Hola, {{ current_user.nombre }}</a>
+                    <form action="{{ url_for('cerrar_sesion') }}" method="post" class="account-logout">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button type="submit">Salir</button>
+                    </form>
+                {% else %}
+                    <a href="{{ url_for('iniciar_sesion') }}">Ingresar</a>
+                    <a href="{{ url_for('registro') }}">Crear cuenta</a>
+                {% endif %}
+            </div>
 
         </div>
 
@@ -39,7 +50,6 @@
             <a href="index.html">Inicio</a>
             <a href="categorias.html">Categorías</a>
             <a href="mas_opciones.html">Más opciones</a>
-            <a href="historial.html">Mi historial</a>
             <a href="publicacion.html">Vender un producto</a>
         </nav>
     </header>
@@ -87,64 +97,75 @@
 
             <div class="categorias-grid">
 
-                <a class="categoria" href="busqueda.html?q=consolas">
+                <a class="categoria" href="tal_categoria.html?categoria=consolas">
                     <div class="categoria-icono morado">🎮</div>
                     <h3>Consolas</h3>
                     <p>
                         PlayStation, Xbox, Nintendo y otras consolas
                         para disfrutar tus juegos favoritos.
                     </p>
-                    <span class="ver-categoria">Ver consolas →</span>
+                    <span class="ver-categoria">Ver consolas ({{ conteos.get('consolas', 0) }}) →</span>
                 </a>
 
-                <a class="categoria" href="busqueda.html?q=videojuegos">
+                <a class="categoria" href="tal_categoria.html?categoria=videojuegos">
                     <div class="categoria-icono azul">🕹️</div>
                     <h3>Videojuegos</h3>
                     <p>
                         Aventuras, acción, deportes, estrategia y
                         muchos títulos más.
                     </p>
-                    <span class="ver-categoria">Ver videojuegos →</span>
+                    <span class="ver-categoria">Ver videojuegos ({{ conteos.get('videojuegos', 0) }}) →</span>
                 </a>
 
-                <a class="categoria" href="busqueda.html?q=perifericos">
+                <a class="categoria" href="tal_categoria.html?categoria=perifericos">
                     <div class="categoria-icono verde">⌨️</div>
                     <h3>Periféricos</h3>
                     <p>
                         Teclados, mouse, auriculares y accesorios
                         para mejorar tu experiencia.
                     </p>
-                    <span class="ver-categoria">Ver periféricos →</span>
+                    <span class="ver-categoria">Ver periféricos ({{ conteos.get('perifericos', 0) }}) →</span>
                 </a>
 
-                <a class="categoria" href="busqueda.html?q=componentes">
+                <a class="categoria" href="tal_categoria.html?categoria=componentes">
                     <div class="categoria-icono naranja">⚙️</div>
                     <h3>Componentes de PC</h3>
                     <p>
                         Placas de video, procesadores, memorias y
                         componentes para tu computadora.
                     </p>
-                    <span class="ver-categoria">Ver componentes →</span>
+                    <span class="ver-categoria">Ver componentes ({{ conteos.get('componentes', 0) }}) →</span>
                 </a>
 
-                <a class="categoria" href="busqueda.html?q=pc">
+                <a class="categoria" href="tal_categoria.html?categoria=pc">
                     <div class="categoria-icono rosa">🖥️</div>
                     <h3>Computadoras gamer</h3>
                     <p>
                         Equipos armados y computadoras para jugar,
                         estudiar y crear contenido.
                     </p>
-                    <span class="ver-categoria">Ver computadoras →</span>
+                    <span class="ver-categoria">Ver computadoras ({{ conteos.get('pc', 0) }}) →</span>
                 </a>
 
-                <a class="categoria" href="busqueda.html?q=accesorios">
+                <a class="categoria" href="tal_categoria.html?categoria=accesorios">
                     <div class="categoria-icono celeste">🔌</div>
                     <h3>Accesorios</h3>
                     <p>
                         Cables, soportes, adaptadores y otros
                         complementos para tu equipo.
                     </p>
-                    <span class="ver-categoria">Ver accesorios →</span>
+                    <span class="ver-categoria">Ver accesorios ({{ conteos.get('accesorios', 0) }}) →</span>
+                </a>
+
+
+                <a class="categoria" href="tal_categoria.html?categoria=audio">
+                    <div class="categoria-icono azul">🎧</div>
+                    <h3>Audio gamer</h3>
+                    <p>
+                        Auriculares y micrófonos para jugar,
+                        comunicarte y hacer streaming.
+                    </p>
+                    <span class="ver-categoria">Ver audio ({{ conteos.get('audio', 0) }}) →</span>
                 </a>
 
             </div>
